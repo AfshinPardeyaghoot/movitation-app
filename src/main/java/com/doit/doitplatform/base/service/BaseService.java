@@ -18,10 +18,6 @@ public interface BaseService<ENTITY extends BaseEntity<PK>, PK extends Serializa
 
     ENTITY save(ENTITY object);
 
-    ENTITY save(ENTITY object, PK createdBy);
-
-    ENTITY update(ENTITY object, PK updatedBy);
-
     void delete(ENTITY object);
 
     void deleteById(PK id);

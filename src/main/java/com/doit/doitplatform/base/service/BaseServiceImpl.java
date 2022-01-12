@@ -1,6 +1,7 @@
 package com.doit.doitplatform.base.service;
 
 
+import com.doit.doitplatform.exception.NotFoundException;
 import com.doit.doitplatform.base.model.BaseEntity;
 import com.doit.doitplatform.base.repository.AbstractRepository;
 import org.springframework.data.domain.Page;
@@ -54,19 +55,6 @@ public class BaseServiceImpl<ENTITY extends BaseEntity<PK>,
     }
 
     @Override
-    public ENTITY save(ENTITY object, PK createdBy) {
-        object.setCreatedBy(createdBy);
-        return save(object);
-    }
-
-    @Override
-    public ENTITY update(ENTITY object, PK updatedBy) {
-        object.setUpdateBy(updatedBy);
-        return save(object);
-    }
-
-
-    @Override
     public Long countAll() {
         return abstractRepository.count();
     }
@@ -74,8 +62,7 @@ public class BaseServiceImpl<ENTITY extends BaseEntity<PK>,
     @Override
     public ENTITY getById(PK id) {
         return abstractRepository.findById(id).orElseThrow(() ->
-                null// new NotFoundException(String.format("object %d from %s not found", id, entityClass))
-        );
+                new NotFoundException(String.format("object %d from %s not found", id, entityClass)));
     }
 
     @Override

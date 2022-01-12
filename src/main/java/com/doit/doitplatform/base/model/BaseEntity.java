@@ -24,16 +24,13 @@ public class BaseEntity<PK extends Serializable> {
     @Column(nullable = false, updatable = false)
     private PK id;
 
-
     @CreationTimestamp
     private Instant createdAt;
 
-    private PK createdBy;
 
     @UpdateTimestamp
     private Instant updatedAt;
 
-    private PK updateBy;
 
     private Boolean isDeleted;
 
