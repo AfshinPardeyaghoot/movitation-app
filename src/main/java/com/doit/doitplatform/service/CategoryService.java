@@ -17,4 +17,8 @@ public class CategoryService extends BaseServiceImpl<Category, Long, CategoryRep
         super(abstractRepository);
         this.repository = abstractRepository;
     }
+
+    public boolean isTableEmpty(){
+        return repository.count() == 0;
+    }
 }

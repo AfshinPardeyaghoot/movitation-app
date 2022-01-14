@@ -17,4 +17,9 @@ public class QuotationService extends BaseServiceImpl<Quotation, Long, Quotation
         super(abstractRepository);
         this.repository = abstractRepository;
     }
+
+    public boolean isTableEmpty(){
+        return repository.count() == 0;
+    }
+
 }

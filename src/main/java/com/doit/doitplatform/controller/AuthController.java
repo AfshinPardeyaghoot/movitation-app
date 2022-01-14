@@ -2,8 +2,10 @@ package com.doit.doitplatform.controller;
 
 import com.doit.doitplatform.dto.SignUpDTO;
 import com.doit.doitplatform.exception.NotFoundException;
+import com.doit.doitplatform.model.Category;
 import com.doit.doitplatform.model.Role;
 import com.doit.doitplatform.model.User;
+import com.doit.doitplatform.service.CategoryService;
 import com.doit.doitplatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,20 +18,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class AuthController {
 
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final CategoryService categoryService;
     private final UserService userService;
 
     @Autowired
-    public AuthController(PasswordEncoder passwordEncoder, UserService userService, AuthenticationManager authenticationManager) {
+    public AuthController(PasswordEncoder passwordEncoder, UserService userService, AuthenticationManager authenticationManager, CategoryService categoryService) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
         this.authenticationManager = authenticationManager;
+        this.categoryService = categoryService;
     }
 
     @PostMapping("/sign-up")
@@ -54,15 +57,8 @@ public class AuthController {
 
     @RequestMapping("/index")
     public String afterLogin(Model model) {
-        System.out.println("user authenticated");
-        List<String> strings = new ArrayList<>();
-        strings.add("Hello");
-        strings.add("Welcome");
-        strings.add("To");
-        strings.add("My");
-        strings.add("Dear");
-        strings.add("Friends");
-        model.addAttribute("strings", strings);
+        Category category = categoryService.getById(1L);
+        model.addAttribute("quotations", category.getQuotations());
         return "index";
     }
 

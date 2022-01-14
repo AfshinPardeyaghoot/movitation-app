@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,5 +27,7 @@ public class Category extends BaseEntity<Long> {
     @Column(name = "is_general")
     private Boolean isGeneral;
 
+    @OneToMany(mappedBy = "category")
+    private List<QuotationCategory> quotations;
 
 }
