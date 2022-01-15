@@ -39,7 +39,7 @@
         width: 40%;
     }
 </style>
-<body th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + ');'">
+<body th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + '); '">
 <!--th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + ');'"-->
 <div class="header-container">header</div>
 <div class="slider-container" th:each="quote : ${quotations}">
