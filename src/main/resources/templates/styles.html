@@ -4,6 +4,37 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+
+        @font-face {
+            font-family: font1;
+            src: url("http://localhost:8083/image/font1.ttf");
+        }
+
+        @font-face {
+            font-family: font2;
+            src: url("http://localhost:8083/image/font2.otf");
+        }
+
+        @font-face {
+            font-family: font3;
+            src: url("http://localhost:8083/image/font3.ttf");
+        }
+
+        @font-face {
+            font-family: font4;
+            src: url("http://localhost:8083/image/font4.ttf");
+        }
+
+        @font-face {
+            font-family: font5;
+            src: url("http://localhost:8083/image/font5.ttf");
+        }
+
+        @font-face {
+            font-family: font6;
+            src: url("http://localhost:8083/image/font6.ttf");
+        }
+
         body {
             display: flex;
             flex-direction: column;
@@ -41,6 +72,7 @@
             position: relative;
             top: 35%;
             text-shadow: 2px 2px 4px #000000;
+            font-family: custom;
             /*text-shadow: 0 0 3px #fffbfb, 0 0 5px #111111;*/
         }
 
@@ -73,7 +105,7 @@
           th:style="'background-image:url(' + ${style.getBackgroundImage()} + '); color:'+${style.getFontColor()}+';'"
           th:action="@{/user/style}"
           method="post">
-        <div class="style-text">I am</div>
+        <div class="style-text" th:style="'font-family:'+${style.getFontFile()}+';'">من هستم</div>
         <input type="hidden" th:value="${style.getId()}" name="styleId">
         <button type="submit">
         </button>
