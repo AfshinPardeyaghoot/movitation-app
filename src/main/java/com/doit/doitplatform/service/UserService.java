@@ -45,4 +45,9 @@ public class UserService extends BaseServiceImpl<User, Long, UserRepository> imp
         }});
         return save(user);
     }
+
+    public User findByUser(String username) {
+        return repository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException(String.format("User by username %s not found", username)));
+    }
 }

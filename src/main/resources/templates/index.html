@@ -8,7 +8,6 @@
         display: flex;
         flex-direction: column;
         height: 100vh;
-        /*background-image: url("http://localhost:8083/image/ai");*/
         background-repeat: no-repeat;
         background-size: 100% 100%;
 
@@ -37,9 +36,10 @@
         top: 320px;
         height: 40%;
         width: 40%;
+
     }
 </style>
-<body th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + '); '">
+<body th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + '); color:'+${pageStyle.getFontColor()}+';'">
 <!--th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + ');'"-->
 <div class="header-container">header</div>
 <div class="slider-container" th:each="quote : ${quotations}">

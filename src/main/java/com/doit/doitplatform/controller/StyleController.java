@@ -2,7 +2,10 @@ package com.doit.doitplatform.controller;
 
 import com.doit.doitplatform.model.Category;
 import com.doit.doitplatform.model.PageStyle;
+import com.doit.doitplatform.model.User;
 import com.doit.doitplatform.service.CategoryService;
+import com.doit.doitplatform.service.UserPageStyleService;
+import com.doit.doitplatform.service.UserService;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,30 +23,40 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.Principal;
 
 @Controller
 public class StyleController {
 
     private final CategoryService categoryService;
+    private final UserPageStyleService userPageStyleService;
+    private final UserService userService;
     private final String BASE_URL;
 
     @Autowired
-    public StyleController(@Value("${application.base.url}") String BASE_URL, CategoryService categoryService) {
+    public StyleController(@Value("${application.base.url}") String BASE_URL, CategoryService categoryService, UserPageStyleService userPageStyleService, UserService userService) {
         this.categoryService = categoryService;
         this.BASE_URL = BASE_URL;
+        this.userPageStyleService = userPageStyleService;
+        this.userService = userService;
     }
 
     @RequestMapping("/index")
     public String afterLogin(Model model) {
-        Category category = categoryService.getById(1L);
+        Category category = categoryService.getById(3L);
         model.addAttribute("quotations", category.getQuotations());
         return "index";
     }
 
     @ModelAttribute("pageStyle")
-    public PageStyle style() {
+    public PageStyle style(Principal principal) {
+        User user = userService.findByUser(principal.getName());
+        if (userPageStyleService.findByUser(user).isPresent()) {
+            return userPageStyleService.findByUser(user).get().getPageStyle();
+        }
         PageStyle style = new PageStyle();
-        style.setBackgroundImage(BASE_URL + "/image/ai");
+        style.setBackgroundImage(BASE_URL + "/image/image5.jpg");
+        style.setFontColor("#EC9F3B");
         return style;
     }
 

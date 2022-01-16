@@ -1,9 +1,11 @@
 package com.doit.doitplatform.service;
 
 import com.doit.doitplatform.model.Category;
+import com.doit.doitplatform.model.PageStyle;
 import com.doit.doitplatform.model.Quotation;
 import com.doit.doitplatform.model.QuotationCategory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -13,12 +15,16 @@ public class DataLoader implements CommandLineRunner {
     private final CategoryService categoryService;
     private final QuotationService quotationService;
     private final QuotationCategoryService quotationCategoryService;
+    private final PageStyleService pageStyleService;
+    private final String BASE_URL;
 
     @Autowired
-    public DataLoader(CategoryService categoryService, QuotationService quotationService, QuotationCategoryService quotationCategoryService) {
+    public DataLoader(@Value("${application.base.url}") String BASE_URL, CategoryService categoryService, QuotationService quotationService, QuotationCategoryService quotationCategoryService, PageStyleService pageStyleService) {
         this.categoryService = categoryService;
         this.quotationService = quotationService;
         this.quotationCategoryService = quotationCategoryService;
+        this.pageStyleService = pageStyleService;
+        this.BASE_URL = BASE_URL;
     }
 
     @Override
@@ -133,6 +139,89 @@ public class DataLoader implements CommandLineRunner {
             quotationCategory11.setCategory(hardTimes);
             quotationCategory11.setQuotation(q10);
             quotationCategoryService.save(quotationCategory11);
+
+
+            PageStyle style = new PageStyle();
+            style.setBackgroundImage(BASE_URL + "/image/image1.jpg");
+            style.setFontColor("#EC9F3B");
+
+
+            PageStyle style2 = new PageStyle();
+            style2.setBackgroundImage(BASE_URL + "/image/image2.jpg");
+            style2.setFontColor("#EC9F3B");
+
+            PageStyle style3 = new PageStyle();
+            style3.setBackgroundImage(BASE_URL + "/image/image3.jpg");
+            style3.setFontColor("#EC9F3B");
+
+            PageStyle style4 = new PageStyle();
+            style4.setBackgroundImage(BASE_URL + "/image/image4.jpg");
+            style4.setFontColor("#EC9F3B");
+
+
+            PageStyle styl5 = new PageStyle();
+            styl5.setBackgroundImage(BASE_URL + "/image/image5.jpg");
+            styl5.setFontColor("#EC9F3B");
+
+
+            PageStyle styl6 = new PageStyle();
+            styl6.setBackgroundImage(BASE_URL + "/image/image6.jpg");
+            styl6.setFontColor("#EC9F3B");
+
+            PageStyle styl7 = new PageStyle();
+            styl7.setBackgroundImage(BASE_URL + "/image/image7.jpg");
+            styl7.setFontColor("#EC9F3B");
+
+
+            PageStyle styl8 = new PageStyle();
+            styl8.setBackgroundImage(BASE_URL + "/image/image8.jpg");
+            styl8.setFontColor("#EC9F3B");
+
+            PageStyle styl9 = new PageStyle();
+            styl9.setBackgroundImage(BASE_URL + "/image/image9.jpg");
+            styl9.setFontColor("#EC9F3B");
+
+
+            PageStyle styl10 = new PageStyle();
+            styl10.setBackgroundImage(BASE_URL + "/image/image10.jpg");
+            styl10.setFontColor("#EC9F3B");
+
+            PageStyle style11 = new PageStyle();
+            style11.setBackgroundImage(BASE_URL + "/image/image11.jpg");
+            style11.setFontColor("#EC9F3B");
+
+            PageStyle styl12 = new PageStyle();
+            styl12.setBackgroundImage(BASE_URL + "/image/image12.jpg");
+            styl12.setFontColor("#EC9F3B");
+
+            PageStyle styl13 = new PageStyle();
+            styl13.setBackgroundImage(BASE_URL + "/image/image13.jpg");
+            styl13.setFontColor("#EC9F3B");
+
+            PageStyle styl14 = new PageStyle();
+            styl14.setBackgroundImage(BASE_URL + "/image/image14.jpg");
+            styl14.setFontColor("#EC9F3B");
+
+            PageStyle styl15 = new PageStyle();
+            styl15.setBackgroundImage(BASE_URL + "/image/image15.jpg");
+            styl15.setFontColor("#EC9F3B");
+
+            pageStyleService.save(style);
+            pageStyleService.save(style2);
+            pageStyleService.save(style3);
+            pageStyleService.save(style4);
+            pageStyleService.save(styl5);
+            pageStyleService.save(styl6);
+            pageStyleService.save(styl7);
+            pageStyleService.save(styl8);
+            pageStyleService.save(styl9);
+            pageStyleService.save(styl10);
+            pageStyleService.save(style11);
+            pageStyleService.save(styl12);
+            pageStyleService.save(styl13);
+            pageStyleService.save(styl14);
+            pageStyleService.save(styl15);
+
 
         }
 
