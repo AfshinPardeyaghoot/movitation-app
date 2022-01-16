@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="header">
+
+</div>
+<div class="container">
+    <!--/*@thymesVar id="style" type="com.doit.doitplatform.model.PageStyle"*/-->
+    <!--    <div class="style-container" th:each="style : ${pageStyleList}"-->
+    <!--         th:style="'background-image:url(' + ${style.getBackgroundImage()} + '); color:'+${style.getFontColor()}+';'">-->
+    <!--        <div class="style-text">I am</div>-->
+    <!--    </div>-->
+    <form class="style-container" th:each="style : ${pageStyleList}"
+          th:style="'background-image:url(' + ${style.getBackgroundImage()} + '); color:'+${style.getFontColor()}+';'"
+          th:action="@{/user/style}"
+          method="post">
+        <div class="style-text" th:style="'font-family:'+${style.getFontFile()}+';'">من هستم</div>
+        <input type="hidden" th:value="${style.getId()}" name="styleId">
+        <button type="submit">
+        </button>
+    </form>
+
+</div>
+</body>
+</html>
