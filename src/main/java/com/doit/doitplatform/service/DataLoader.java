@@ -144,66 +144,81 @@ public class DataLoader implements CommandLineRunner {
             PageStyle style = new PageStyle();
             style.setBackgroundImage(BASE_URL + "/image/image1.jpg");
             style.setFontColor("#EC9F3B");
+            style.setFontFile("http://localhost:8083/image/font1.ttf");
 
 
             PageStyle style2 = new PageStyle();
             style2.setBackgroundImage(BASE_URL + "/image/image2.jpg");
             style2.setFontColor("#EC9F3B");
+            style2.setFontFile("http://localhost:8083/image/font2.otf");
 
             PageStyle style3 = new PageStyle();
             style3.setBackgroundImage(BASE_URL + "/image/image3.jpg");
             style3.setFontColor("#EC9F3B");
+            style3.setFontFile("http://localhost:8083/image/font3.ttf");
 
             PageStyle style4 = new PageStyle();
             style4.setBackgroundImage(BASE_URL + "/image/image4.jpg");
             style4.setFontColor("#EC9F3B");
+            style4.setFontFile("http://localhost:8083/image/font4.ttf");
 
 
             PageStyle styl5 = new PageStyle();
             styl5.setBackgroundImage(BASE_URL + "/image/image5.jpg");
             styl5.setFontColor("#EC9F3B");
+            styl5.setFontFile("http://localhost:8083/image/font5.ttf");
 
 
             PageStyle styl6 = new PageStyle();
             styl6.setBackgroundImage(BASE_URL + "/image/image6.jpg");
             styl6.setFontColor("#EC9F3B");
+            styl6.setFontFile("http://localhost:8083/image/font6.ttf");
 
             PageStyle styl7 = new PageStyle();
             styl7.setBackgroundImage(BASE_URL + "/image/image7.jpg");
             styl7.setFontColor("#EC9F3B");
+            styl7.setFontFile("http://localhost:8083/image/font1.ttf");
 
 
             PageStyle styl8 = new PageStyle();
             styl8.setBackgroundImage(BASE_URL + "/image/image8.jpg");
             styl8.setFontColor("#EC9F3B");
+            styl8.setFontFile("http://localhost:8083/image/font2.otf");
 
             PageStyle styl9 = new PageStyle();
             styl9.setBackgroundImage(BASE_URL + "/image/image9.jpg");
             styl9.setFontColor("#EC9F3B");
+            styl9.setFontFile("http://localhost:8083/image/font3.ttf");
 
 
             PageStyle styl10 = new PageStyle();
             styl10.setBackgroundImage(BASE_URL + "/image/image10.jpg");
             styl10.setFontColor("#EC9F3B");
+            styl10.setFontFile("http://localhost:8083/image/font4.ttf");
 
             PageStyle style11 = new PageStyle();
             style11.setBackgroundImage(BASE_URL + "/image/image11.jpg");
             style11.setFontColor("#EC9F3B");
+            style11.setFontFile("http://localhost:8083/image/font5.ttf");
 
             PageStyle styl12 = new PageStyle();
             styl12.setBackgroundImage(BASE_URL + "/image/image12.jpg");
             styl12.setFontColor("#EC9F3B");
+            styl12.setFontFile("http://localhost:8083/image/font6.ttf");
 
             PageStyle styl13 = new PageStyle();
             styl13.setBackgroundImage(BASE_URL + "/image/image13.jpg");
             styl13.setFontColor("#EC9F3B");
+            styl13.setFontFile("http://localhost:8083/image/font3.ttf");
 
             PageStyle styl14 = new PageStyle();
             styl14.setBackgroundImage(BASE_URL + "/image/image14.jpg");
             styl14.setFontColor("#EC9F3B");
+            styl14.setFontFile("http://localhost:8083/image/font5.ttf");
 
             PageStyle styl15 = new PageStyle();
             styl15.setBackgroundImage(BASE_URL + "/image/image15.jpg");
+            styl15.setFontFile("http://localhost:8083/image/font4.ttf");
             styl15.setFontColor("#EC9F3B");
 
             pageStyleService.save(style);

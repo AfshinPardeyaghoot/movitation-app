@@ -4,18 +4,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
 <style>
+
+    @font-face {
+        font-family: font1;
+        src: url("http://localhost:8083/image/font1.ttf");
+    }
+
+    @font-face {
+        font-family: font2;
+        src: url("http://localhost:8083/image/font2.otf");
+    }
+
+    @font-face {
+        font-family: font3;
+        src: url("http://localhost:8083/image/font3.ttf");
+    }
+
+    @font-face {
+        font-family: font4;
+        src: url("http://localhost:8083/image/font4.ttf");
+    }
+
+    @font-face {
+        font-family: font5;
+        src: url("http://localhost:8083/image/font5.ttf");
+    }
+
+    @font-face {
+        font-family: font6;
+        src: url("http://localhost:8083/image/font6.ttf");
+    }
+
+
     body {
         display: flex;
         flex-direction: column;
         height: 100vh;
         background-repeat: no-repeat;
         background-size: 100% 100%;
-
     }
 
     .header-container {
         display: flex;
-        justify-content: center;
+        justify-content: left;
         height: 40%;
     }
 
@@ -35,13 +66,25 @@
         top: 320px;
         height: 40%;
         width: 40%;
-
     }
+
+    .background-btn {
+        background-image: url("http://localhost:8083/image/wallpaper.png");
+        background-size: 100% 100%;
+        background-color: #eeeeee;
+        height: 90%;
+        width: 60px;
+    }
+
+
 </style>
 <body th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + '); color:'+${pageStyle.getFontColor()}+';'">
-<div class="header-container">header</div>
+<div class="header-container">
+    <i class="background-btn" th:text="${pageStyle.getFontFile()}"></i>
+</div>
 <div class="slider-container" th:each="quote : ${quotations}">
-    <div class="mySlides" th:text="${quote.getQuotation().getQuote()}"></div>
+    <div class="mySlides" th:text="${quote.getQuotation().getQuote()}"
+         th:style="'font-family:'+${pageStyle.getFontFile()}+';'"></div>
     <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">
         &#10094;
     </button>

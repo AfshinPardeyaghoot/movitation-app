@@ -24,4 +24,6 @@ public class UserPageStyle extends BaseEntity<Long> {
     @JoinColumn(name = "page_style_id")
     private PageStyle pageStyle;
 
+
+
 }

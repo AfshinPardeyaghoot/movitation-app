@@ -43,18 +43,19 @@ public class StyleController {
         this.userService = userService;
     }
 
-    @RequestMapping("/index")
-    public String afterLogin(Model model) {
-        Category category = categoryService.getById(3L);
-        model.addAttribute("quotations", category.getQuotations());
-        return "index";
+    @GetMapping("/styles")
+    public String styleController(Model model) {
+        List<PageStyle> pageStyleList = pageStyleService.findAllNotDeleted();
+        System.out.println("style counts" + pageStyleList.size());
+        model.addAttribute("pageStyleList", pageStyleList);
+        return "styles";
     }
 
-    @GetMapping("/pageStyleGroup")
-    public String pageStyleGroup(Model model) {
-        List<PageStyle> pageStyleList = pageStyleService.findAllNotDeleted();
-        model.addAttribute("pageStyleList", pageStyleList);
-        return "pageStyleGroup";
+    @RequestMapping("/index")
+    public String afterLogin(Model model) {
+        Category category = categoryService.getById(5L);
+        model.addAttribute("quotations", category.getQuotations());
+        return "index";
     }
 
     @ModelAttribute("pageStyle")
@@ -66,6 +67,7 @@ public class StyleController {
         PageStyle style = new PageStyle();
         style.setBackgroundImage(BASE_URL + "/image/image5.jpg");
         style.setFontColor("#EC9F3B");
+        style.setFontFile("font3");
         return style;
     }
 

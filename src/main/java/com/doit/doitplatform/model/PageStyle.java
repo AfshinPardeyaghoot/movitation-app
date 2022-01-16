@@ -18,4 +18,5 @@ import javax.persistence.Table;
 public class PageStyle extends BaseEntity<Long> {
     private String backgroundImage;
     private String fontColor;
+    private String fontFile;
 }
