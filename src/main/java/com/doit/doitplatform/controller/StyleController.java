@@ -3,6 +3,7 @@ package com.doit.doitplatform.controller;
 import com.doit.doitplatform.model.Category;
 import com.doit.doitplatform.model.PageStyle;
 import com.doit.doitplatform.model.User;
+import com.doit.doitplatform.model.UserPageStyle;
 import com.doit.doitplatform.service.CategoryService;
 import com.doit.doitplatform.service.PageStyleService;
 import com.doit.doitplatform.service.UserPageStyleService;
@@ -14,10 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -79,4 +77,23 @@ public class StyleController {
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(in, response.getOutputStream());
     }
+
+    @PostMapping("/user/style")
+    public String setUserStyle(Long styleId, Principal principal) {
+        UserPageStyle userPageStyle = null;
+        User user = userService.findByUser(principal.getName());
+        PageStyle pageStyle = pageStyleService.getById(styleId);
+        if (userPageStyleService.findByUser(user).isPresent()) {
+            userPageStyle = userPageStyleService.findByUser(user).get();
+            userPageStyle.setPageStyle(pageStyle);
+        } else {
+            userPageStyle = new UserPageStyle();
+            userPageStyle.setPageStyle(pageStyle);
+            userPageStyle.setUser(user);
+            userPageStyle.setIsDeleted(false);
+        }
+        userPageStyleService.save(userPageStyle);
+        return "redirect:/index";
+    }
+
 }

@@ -10,6 +10,7 @@
             height: 100%;
             background-repeat: no-repeat;
             background-size: 100% 100%;
+            background-color: #324346;
         }
 
         .header {
@@ -36,32 +37,49 @@
             box-shadow: 5px 20px 50px #000;
         }
 
-        .style-text{
+        .style-text {
             position: relative;
             top: 35%;
             text-shadow: 2px 2px 4px #000000;
+            /*text-shadow: 0 0 3px #fffbfb, 0 0 5px #111111;*/
         }
 
-        .btn{
-            position: relative;
-            top: 60%;
+        button {
+            height: 100%;
+            width: 100%;
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        form {
+            height: 100%;
+            width: 100%;
         }
 
 
     </style>
 </head>
 
-<body th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + '); color:'+${pageStyle.getFontColor()}+';'">
+<body>
 <div class="header">
 
 </div>
 <div class="container">
     <!--/*@thymesVar id="style" type="com.doit.doitplatform.model.PageStyle"*/-->
-    <div class="style-container" th:each="style : ${pageStyleList}"
-         th:style="'background-image:url(' + ${style.getBackgroundImage()} + '); color:'+${style.getFontColor()}+';'">
+    <!--    <div class="style-container" th:each="style : ${pageStyleList}"-->
+    <!--         th:style="'background-image:url(' + ${style.getBackgroundImage()} + '); color:'+${style.getFontColor()}+';'">-->
+    <!--        <div class="style-text">I am</div>-->
+    <!--    </div>-->
+    <form class="style-container" th:each="style : ${pageStyleList}"
+          th:style="'background-image:url(' + ${style.getBackgroundImage()} + '); color:'+${style.getFontColor()}+';'"
+          th:action="@{/user/style}"
+          method="post">
         <div class="style-text">I am</div>
-        <button class="btn">select</button>
-    </div>
+        <input type="hidden" th:value="${style.getId()}" name="styleId">
+        <button type="submit">
+        </button>
+    </form>
+
 </div>
 </body>
 </html>
