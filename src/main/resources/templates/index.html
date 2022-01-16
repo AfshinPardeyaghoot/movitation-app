@@ -17,7 +17,6 @@
         display: flex;
         justify-content: center;
         height: 40%;
-        /*background-color: rgba(146, 141, 121, 0.842);*/
     }
 
     .slider-container {
@@ -40,7 +39,6 @@
     }
 </style>
 <body th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + '); color:'+${pageStyle.getFontColor()}+';'">
-<!--th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + ');'"-->
 <div class="header-container">header</div>
 <div class="slider-container" th:each="quote : ${quotations}">
     <div class="mySlides" th:text="${quote.getQuotation().getQuote()}"></div>

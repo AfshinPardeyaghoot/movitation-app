@@ -4,6 +4,7 @@ import com.doit.doitplatform.model.Category;
 import com.doit.doitplatform.model.PageStyle;
 import com.doit.doitplatform.model.User;
 import com.doit.doitplatform.service.CategoryService;
+import com.doit.doitplatform.service.PageStyleService;
 import com.doit.doitplatform.service.UserPageStyleService;
 import com.doit.doitplatform.service.UserService;
 import lombok.SneakyThrows;
@@ -24,20 +25,23 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class StyleController {
 
     private final CategoryService categoryService;
     private final UserPageStyleService userPageStyleService;
+    private final PageStyleService pageStyleService;
     private final UserService userService;
     private final String BASE_URL;
 
     @Autowired
-    public StyleController(@Value("${application.base.url}") String BASE_URL, CategoryService categoryService, UserPageStyleService userPageStyleService, UserService userService) {
+    public StyleController(@Value("${application.base.url}") String BASE_URL, CategoryService categoryService, UserPageStyleService userPageStyleService, UserService userService, PageStyleService pageStyleService) {
         this.categoryService = categoryService;
         this.BASE_URL = BASE_URL;
         this.userPageStyleService = userPageStyleService;
+        this.pageStyleService = pageStyleService;
         this.userService = userService;
     }
 
@@ -46,6 +50,13 @@ public class StyleController {
         Category category = categoryService.getById(3L);
         model.addAttribute("quotations", category.getQuotations());
         return "index";
+    }
+
+    @GetMapping("/pageStyleGroup")
+    public String pageStyleGroup(Model model) {
+        List<PageStyle> pageStyleList = pageStyleService.findAllNotDeleted();
+        model.addAttribute("pageStyleList", pageStyleList);
+        return "pageStyleGroup";
     }
 
     @ModelAttribute("pageStyle")
