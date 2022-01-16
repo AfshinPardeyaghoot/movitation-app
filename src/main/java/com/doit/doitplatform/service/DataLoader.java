@@ -41,6 +41,31 @@ public class DataLoader implements CommandLineRunner {
             hardTimes.setTopic("Hard times");
             categoryService.save(hardTimes);
 
+            Category bodyPositive = new Category();
+            bodyPositive.setIsGeneral(true);
+            bodyPositive.setTopic("Body Positive");
+            categoryService.save(bodyPositive);
+
+            Category SelfLove = new Category();
+            SelfLove.setIsGeneral(true);
+            SelfLove.setTopic("Self Love");
+            categoryService.save(SelfLove);
+
+            Category Calm = new Category();
+            Calm.setIsGeneral(true);
+            Calm.setTopic("Calm");
+            categoryService.save(Calm);
+
+            Category Happiness = new Category();
+            Happiness.setIsGeneral(true);
+            Happiness.setTopic("Happiness");
+            categoryService.save(Happiness);
+
+            Category Confidence = new Category();
+            Confidence.setIsGeneral(true);
+            Confidence.setTopic("Confidence");
+            categoryService.save(Confidence);
+
             Quotation q1 = new Quotation();
             q1.setQuote("My Filling are valid");
 

@@ -1,9 +1,9 @@
 package com.doit.doitplatform.base.service;
 
 
-import com.doit.doitplatform.exception.NotFoundException;
 import com.doit.doitplatform.base.model.BaseEntity;
 import com.doit.doitplatform.base.repository.AbstractRepository;
+import com.doit.doitplatform.exception.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
