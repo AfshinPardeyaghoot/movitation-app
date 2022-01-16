@@ -52,10 +52,17 @@ public class StyleController {
     }
 
     @RequestMapping("/index")
-    public String afterLogin(Model model) {
+    public String indexPage(Model model) {
         Category category = categoryService.getById(5L);
         model.addAttribute("quotations", category.getQuotations());
         return "index";
+    }
+
+    @GetMapping("/categories")
+    public String categoryPage(Model model) {
+        List<Category> categories = categoryService.findAllNotDeleted();
+        model.addAttribute("categories", categories);
+        return "categories";
     }
 
     @ModelAttribute("pageStyle")
