@@ -46,8 +46,9 @@
 
     .header-container {
         display: flex;
-        justify-content: left;
-        height: 40%;
+        justify-content: center;
+        height: 20%;
+        opacity: 0.3;
     }
 
     .slider-container {
@@ -76,11 +77,39 @@
         width: 60px;
     }
 
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a{
+        display: inline-block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        background-color: #1e1d1d;
+        opacity: 1;
+
+    }
 
 </style>
 <body th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + '); color:'+${pageStyle.getFontColor()}+';'">
 <div class="header-container">
-    <i class="background-btn" th:text="${pageStyle.getFontFile()}"></i>
+    <ul>
+        <li><a th:href="@{/styles}">پس زمینه</a></li>
+        <li><a href="#news">موضوع</a></li>
+    </ul>
 </div>
 <div class="slider-container" th:each="quote : ${quotations}">
     <div class="mySlides" th:text="${quote.getQuotation().getQuote()}"
