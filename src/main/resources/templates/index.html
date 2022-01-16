@@ -92,7 +92,7 @@
         float: left;
     }
 
-    li a{
+    li a {
         display: inline-block;
         color: white;
         text-align: center;
@@ -110,7 +110,7 @@
 <div class="header-container">
     <ul>
         <li><a th:href="@{/styles}">پس زمینه</a></li>
-        <li><a href="#news">موضوع</a></li>
+        <li><a th:href="@{/categories}">موضوع</a></li>
     </ul>
 </div>
 <div class="slider-container" th:each="quote : ${quotations}">

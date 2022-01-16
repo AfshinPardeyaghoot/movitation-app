@@ -36,7 +36,6 @@ public class AuthController {
     @SneakyThrows
     @PostMapping("/sign-up")
     public String signUp(SignUpDTO signUpDTO, HttpServletRequest request) {
-
         User u = userService.createUser(signUpDTO);
         request.login(signUpDTO.getUsername(), signUpDTO.getPassword());
         return "redirect:/index";

@@ -1,9 +1,6 @@
 package com.doit.doitplatform.controller;
 
-import com.doit.doitplatform.model.Category;
-import com.doit.doitplatform.model.PageStyle;
-import com.doit.doitplatform.model.User;
-import com.doit.doitplatform.model.UserPageStyle;
+import com.doit.doitplatform.model.*;
 import com.doit.doitplatform.service.CategoryService;
 import com.doit.doitplatform.service.PageStyleService;
 import com.doit.doitplatform.service.UserPageStyleService;
@@ -69,15 +66,21 @@ public class StyleController {
 
     @ModelAttribute("pageStyle")
     public PageStyle style(Principal principal) {
-        User user = userService.findByUser(principal.getName());
-        if (userPageStyleService.findByUser(user).isPresent()) {
-            return userPageStyleService.findByUser(user).get().getPageStyle();
-        }
+//        User user = userService.findByUser(principal.getName());
+//        if (userPageStyleService.findByUser(user).isPresent()) {
+//            return userPageStyleService.findByUser(user).get().getPageStyle();
+//        }
         PageStyle style = new PageStyle();
         style.setBackgroundImage(BASE_URL + "/image/image5.jpg");
         style.setFontColor("#EC9F3B");
         style.setFontFile("font3");
         return style;
+    }
+
+    @ModelAttribute("quotation")
+    public Quotation quotation(){
+
+        return null;
     }
 
     @SneakyThrows
