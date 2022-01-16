@@ -42,7 +42,6 @@ public class AuthController {
         return "redirect:/index";
     }
 
-
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("signUpDTO", new SignUpDTO());

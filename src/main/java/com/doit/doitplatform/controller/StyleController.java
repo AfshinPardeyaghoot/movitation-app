@@ -53,15 +53,17 @@ public class StyleController {
 
     @RequestMapping("/index")
     public String indexPage(Model model) {
-        Category category = categoryService.getById(5L);
+        Category category = categoryService.getById(1L);
         model.addAttribute("quotations", category.getQuotations());
         return "index";
     }
 
     @GetMapping("/categories")
     public String categoryPage(Model model) {
-        List<Category> categories = categoryService.findAllNotDeleted();
+        System.out.println("in categories");
+        List<Category> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
+        System.out.println("categories count : " + categories.size());
         return "categories";
     }
 
