@@ -39,6 +39,49 @@
             box-shadow: 5px 20px 50px #343434;
         }
 
+        .create-category {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            margin: 30px;
+            text-align: center;
+            font-size: large;
+            background-size: 100% 100%;
+            color: #b8b2b2;
+            height: 200px;
+            width: 300px;
+            border-radius: 5px;
+        }
+
+
+        .form-hidden-btn {
+            border-radius: 5px;
+            padding: 5px;
+            text-align: center;
+            cursor: pointer;
+            height: 90px;
+            width: 90px;
+            font-size: large;
+            color: #b8b2b2;
+            background: url("http://localhost:8083/image/plus.png") no-repeat;
+            background-size: 100% 100%;
+            border: 6px double #5b5b5b !important;
+
+        }
+
+        .txt {
+            background-color: darkslategrey;
+            height: 90px;
+            width: 90px;
+        }
+
+
+        .form-btn-text {
+            height: 100%;
+            width: 100%;
+            /*background-color: darkslategrey;*/
+        }
+
         .style-text {
             position: relative;
             top: 25%;
@@ -47,7 +90,7 @@
             /*text-shadow: 0 0 3px #fffbfb, 0 0 5px #111111;*/
         }
 
-        button {
+        .submit-btn {
             height: 100%;
             width: 100%;
             cursor: pointer;
@@ -58,6 +101,44 @@
             height: 100%;
             width: 100%;
         }
+
+        .input-name, .cat-form-submit{
+            margin: 5px;
+            padding: 5px;
+            background-color: darkslategrey;
+            border: none;
+            border-radius: 10px;
+            height: 40px;
+            color: #b8b2b2;
+            font-size: large;
+        }
+
+        .cat-form-submit{
+            cursor: pointer !important;
+        }
+
+
+        .category-form{
+            margin: 5px;
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .create-category{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #create-submit:hover{
+            background-color: #0c8f61;
+            color: white;
+        }
+
 
     </style>
 </head>
@@ -70,10 +151,35 @@
           th:action="@{/user/category}"
           method="post">
         <div class="style-text" th:text="${category.getTopic()}"></div>
-        <input type="hidden" th:value="${category.getId()}" name="styleId">
-        <button type="submit">
+        <input type="hidden" th:value="${category.getId()}" name="categoryId">
+        <button type="submit" class="submit-btn">
         </button>
     </form>
+    <div class="create-category">
+        <div class="txt">
+            <button onclick="showForm()" class="form-hidden-btn">
+                <div class="form-btn-text"></div>
+            </button>
+        </div>
+        <form class="category-form" id="cat-form">
+            <input class="input-name" type="text" value="Category Name">
+            <input type="submit" class="cat-form-submit" id="create-submit" value="Add">
+        </form>
+    </div>
 </div>
+
+<script>
+    var x = document.getElementById("cat-form");
+    x.style.display = 'none';
+
+    function showForm() {
+        var form = document.getElementById("cat-form");
+        if (form.style.display === 'none') {
+            form.style.display = 'block';
+        } else {
+            form.style.display = 'none';
+        }
+    }
+</script>
 </body>
 </html>

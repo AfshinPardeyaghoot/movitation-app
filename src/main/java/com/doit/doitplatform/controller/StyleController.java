@@ -1,10 +1,7 @@
 package com.doit.doitplatform.controller;
 
 import com.doit.doitplatform.model.*;
-import com.doit.doitplatform.service.CategoryService;
-import com.doit.doitplatform.service.PageStyleService;
-import com.doit.doitplatform.service.UserPageStyleService;
-import com.doit.doitplatform.service.UserService;
+import com.doit.doitplatform.service.*;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +24,19 @@ public class StyleController {
 
     private final CategoryService categoryService;
     private final UserPageStyleService userPageStyleService;
+    private final UserCategoryService userCategoryService;
     private final PageStyleService pageStyleService;
     private final UserService userService;
     private final String BASE_URL;
 
     @Autowired
-    public StyleController(@Value("${application.base.url}") String BASE_URL, CategoryService categoryService, UserPageStyleService userPageStyleService, UserService userService, PageStyleService pageStyleService) {
+    public StyleController(@Value("${application.base.url}") String BASE_URL, CategoryService categoryService, UserPageStyleService userPageStyleService, UserService userService, PageStyleService pageStyleService, UserCategoryService userCategoryService) {
         this.categoryService = categoryService;
         this.BASE_URL = BASE_URL;
         this.userPageStyleService = userPageStyleService;
         this.pageStyleService = pageStyleService;
         this.userService = userService;
+        this.userCategoryService = userCategoryService;
     }
 
     @GetMapping("/styles")
@@ -50,8 +49,6 @@ public class StyleController {
 
     @RequestMapping("/index")
     public String indexPage(Model model) {
-        Category category = categoryService.getById(1L);
-        model.addAttribute("quotations", category.getQuotations());
         return "index";
     }
 
@@ -77,10 +74,18 @@ public class StyleController {
         return style;
     }
 
-    @ModelAttribute("quotation")
-    public Quotation quotation(){
-
-        return null;
+    @ModelAttribute("quotations")
+    public List<QuotationCategory> quotation(Principal principal) {
+//        User user = userService.findByUser(principal.getName());
+//        Category category = null;
+//        if (userCategoryService.findByUser(user).isPresent()) {
+//            category = userCategoryService.findByUser(user).get().getCategory();
+//        } else {
+//            category = categoryService.findByTopic("General");
+//        }
+        Category category = null;
+        category = categoryService.findByTopic("General");
+        return category.getQuotations();
     }
 
     @SneakyThrows
@@ -107,6 +112,25 @@ public class StyleController {
             userPageStyle.setIsDeleted(false);
         }
         userPageStyleService.save(userPageStyle);
+        return "redirect:/index";
+    }
+
+    @PostMapping("/user/category")
+    public String setUserCategory(Long categoryId, Principal principal) {
+        User user = userService.findByUser(principal.getName());
+        Category category = categoryService.getById(categoryId);
+        UserCategory userCategory = null;
+        if (userCategoryService.findByUser(user).isPresent()) {
+            userCategory = userCategoryService.findByUser(user).get();
+            userCategory.setCategory(category);
+        } else {
+            userCategory = new UserCategory();
+            userCategory.setUser(user);
+            userCategory.setCategory(category);
+            userCategory.setIsDeleted(false);
+        }
+
+        userCategoryService.save(userCategory);
         return "redirect:/index";
     }
 
