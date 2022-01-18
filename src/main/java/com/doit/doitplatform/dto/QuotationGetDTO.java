@@ -13,4 +13,13 @@ public class QuotationGetDTO {
     private Long id;
     private String quote;
     private Boolean isLiked;
+
+    @Override
+    public String toString() {
+        return "QuotationGetDTO{" +
+                "id=" + id +
+                ", quote='" + quote + '\'' +
+                ", isLiked=" + isLiked +
+                '}';
+    }
 }

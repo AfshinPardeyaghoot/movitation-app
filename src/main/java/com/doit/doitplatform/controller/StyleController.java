@@ -1,5 +1,6 @@
 package com.doit.doitplatform.controller;
 
+import com.doit.doitplatform.dto.QuotationGetDTO;
 import com.doit.doitplatform.model.*;
 import com.doit.doitplatform.service.*;
 import lombok.SneakyThrows;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class StyleController {
@@ -49,7 +51,6 @@ public class StyleController {
     @GetMapping("/styles")
     public String styleController(Model model) {
         List<PageStyle> pageStyleList = pageStyleService.findAllNotDeleted();
-        System.out.println("style counts" + pageStyleList.size());
         model.addAttribute("pageStyleList", pageStyleList);
         return "styles";
     }
@@ -64,16 +65,15 @@ public class StyleController {
         System.out.println("in categories");
         List<Category> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
-        System.out.println("categories count : " + categories.size());
         return "categories";
     }
 
     @ModelAttribute("pageStyle")
     public PageStyle style(Principal principal) {
-//        User user = userService.findByUser(principal.getName());
-//        if (userPageStyleService.findByUser(user).isPresent()) {
-//            return userPageStyleService.findByUser(user).get().getPageStyle();
-//        }
+        User user = userService.findByUser(principal.getName());
+        if (userPageStyleService.findByUser(user).isPresent()) {
+            return userPageStyleService.findByUser(user).get().getPageStyle();
+        }
         PageStyle style = new PageStyle();
         style.setBackgroundImage(BASE_URL + "/image/image5.jpg");
         style.setFontColor("#EC9F3B");
@@ -82,17 +82,21 @@ public class StyleController {
     }
 
     @ModelAttribute("quotations")
-    public List<Quotation> quotation(Principal principal) {
-//        User user = userService.findByUser(principal.getName());
-//        Category category = null;
-//        if (userCategoryService.findByUser(user).isPresent()) {
-//            category = userCategoryService.findByUser(user).get().getCategory();
-//        } else {
-//            category = categoryService.findByTopic("General");
-//        }
+    public List<QuotationGetDTO> quotation(Principal principal) {
+        User user = userService.findByUser(principal.getName());
         Category category = null;
-        category = categoryService.findByTopic("General");
-        return quotationService.findAllByCategory(category);
+        if (userCategoryService.findByUser(user).isPresent()) {
+            category = userCategoryService.findByUser(user).get().getCategory();
+        } else {
+            category = categoryService.findByTopic("General");
+        }
+
+        List<QuotationGetDTO> result = quotationService
+                .findAllByCategory(category)
+                .stream()
+                .map(quotation -> quotation.quotationGetDTO(userQuotationLikeService.quotationIdsUserLiked(user)))
+                .collect(Collectors.toList());
+        return result;
     }
 
     @SneakyThrows

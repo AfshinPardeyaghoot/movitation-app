@@ -130,14 +130,12 @@
     .category-id {
         position: absolute;
         top: 700px;
-        color: #0c8f61;
         opacity: 0;
     }
 
     .current-category {
         position: absolute;
         top: 700px;
-        color: #0c8f61;
     }
 
 </style>
@@ -152,6 +150,7 @@
     <div class="mySlides" th:text="${quote.getQuote()}"
          th:style="'font-family:'+${pageStyle.getFontFile()}+';'"></div>
     <div class="category-id" th:text="${quote.getId()}"></div>
+    <div class="is-quote-liked" th:text="${quote.getIsLiked()}" style="display: none"></div>
     <div class="operation-container" onclick="sendLikeRequest()">
         <button class="like-btn">
 
@@ -168,7 +167,10 @@
 <script>
     var slideIndex = 1;
     showDivs(slideIndex);
-    var qouteCount;
+    var quoteID;
+
+    setLikeBtnColor();
+
 
     function plusDivs(n) {
         showDivs((slideIndex += n));
@@ -195,32 +197,52 @@
         x[slideIndex - 1].style.display = "block";
         y[slideIndex - 1].style.display = "block";
         z[slideIndex - 1].style.display = "block";
-        qouteCount = z[slideIndex - 1].innerHTML
+        quoteID = z[slideIndex - 1].innerHTML
 
 
     }
 
     function sendLikeRequest() {
 
-        console.log(qouteCount);
+        console.log(quoteID);
 
         var data = {};
-        data["quoteId"] = qouteCount;
+        data["quoteId"] = quoteID;
 
         var token = $("meta[name='_csrf']").attr("content");
 
         $.ajax({
             type: "post",
-            data: qouteCount,
+            data: quoteID,
             contentType: "application/json",
             url: "/like",
             dataType: "json",
             headers: {"X-CSRF-TOKEN": token},
             success: function (result) {
-                var z = document.getElementsByClassName("like-btn");
-                z[slideIndex - 1].style.backgroundColor = "red";
+                var n = document.getElementsByClassName("like-btn");
+                var m = document.getElementsByClassName("is-quote-liked");
+                var isLiked = m[slideIndex - 1].innerHTML;
+                if (isLiked === 'true') {
+                    n[slideIndex - 1].style.backgroundColor = "#FA9E9ED8";
+                    m[slideIndex - 1].innerHTML = 'false';
+                } else {
+                    n[slideIndex - 1].style.backgroundColor = "red";
+                    m[slideIndex - 1].innerHTML = 'true';
+                }
+
             }
         });
+    }
+
+    function setLikeBtnColor() {
+        var x = document.getElementsByClassName("like-btn")
+        var y = document.getElementsByClassName("is-quote-liked");
+        for (i = 0; i < x.length; i++) {
+            var isLiked = y[i].innerHTML;
+            if (isLiked === 'true') {
+                x[i].style.backgroundColor = "red";
+            }
+        }
     }
 </script>
 </body>

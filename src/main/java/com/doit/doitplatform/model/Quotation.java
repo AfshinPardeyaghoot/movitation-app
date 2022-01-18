@@ -1,6 +1,7 @@
 package com.doit.doitplatform.model;
 
 import com.doit.doitplatform.base.model.BaseEntity;
+import com.doit.doitplatform.dto.QuotationGetDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,15 @@ public class Quotation extends BaseEntity<Long> {
 
     @OneToMany(mappedBy = "quotation")
     private List<QuotationCategory> categories;
+
+
+    public QuotationGetDTO quotationGetDTO(List<Long> likedQuotations) {
+        QuotationGetDTO getDTO = new QuotationGetDTO();
+        getDTO.setQuote(quote);
+        getDTO.setId(getId());
+        if (likedQuotations.contains(getId()))
+            getDTO.setIsLiked(true);
+        else getDTO.setIsLiked(false);
+        return getDTO;
+    }
 }

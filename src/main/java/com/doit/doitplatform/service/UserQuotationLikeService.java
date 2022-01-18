@@ -7,6 +7,8 @@ import com.doit.doitplatform.model.UserQuotationLike;
 import com.doit.doitplatform.repository.UserQuotationLikeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserQuotationLikeService extends BaseServiceImpl<UserQuotationLike, Long, UserQuotationLikeRepository> {
 
@@ -38,5 +40,9 @@ public class UserQuotationLikeService extends BaseServiceImpl<UserQuotationLike,
         UserQuotationLike userQuotationLike = repository.findByUserAndQuotationAndIsDeleted(user, quotation, false).get();
         userQuotationLike.setIsDeleted(true);
         return repository.save(userQuotationLike);
+    }
+
+    public List<Long> quotationIdsUserLiked(User user) {
+        return repository.getQuotationIdsUserLiked(user);
     }
 }
