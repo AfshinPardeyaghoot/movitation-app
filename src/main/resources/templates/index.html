@@ -3,6 +3,7 @@
 <title>Do It App</title>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 
     @font-face {
@@ -105,6 +106,25 @@
         opacity: 1;
     }
 
+    .like-btn {
+        background: url("http://localhost:8083/image/like.png") no-repeat;
+        background-size: 100% 100%;
+        height: 40px;
+        width: 40px;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        position: absolute;
+        top: 600px;
+        margin: 0;
+        padding: 0;
+        background-color: #FA9E9ED8;
+    }
+
+    .like-btn:hover {
+        background-color: red;
+    }
+
 </style>
 <body th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + '); color:'+${pageStyle.getFontColor()}+';'">
 <div class="header-container">
@@ -116,6 +136,11 @@
 <div class="slider-container" th:each="quote : ${quotations}">
     <div class="mySlides" th:text="${quote.getQuotation().getQuote()}"
          th:style="'font-family:'+${pageStyle.getFontFile()}+';'"></div>
+    <div class="operation-container">
+        <button class="like-btn">
+
+        </button>
+    </div>
     <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">
         &#10094;
     </button>
@@ -135,6 +160,7 @@
     function showDivs(n) {
         var i;
         var x = document.getElementsByClassName("mySlides");
+        var y = document.getElementsByClassName("operation-container");
         if (n > x.length) {
             slideIndex = 1;
         }
@@ -143,8 +169,10 @@
         }
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
+            y[i].style.display = "none"
         }
         x[slideIndex - 1].style.display = "block";
+        y[slideIndex - 1].style.display = "block";
     }
 </script>
 </body>
