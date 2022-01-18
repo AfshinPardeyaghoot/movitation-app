@@ -8,6 +8,8 @@ import com.doit.doitplatform.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoryService extends BaseServiceImpl<Category, Long, CategoryRepository> {
 
@@ -43,5 +45,18 @@ public class CategoryService extends BaseServiceImpl<Category, Long, CategoryRep
         }
 
         return result;
+    }
+
+    public List<Category> getGeneralAndUserCategories(User user) {
+        return repository.getGeneralAndUserCategories(user);
+    }
+
+    public Category create(String categoryName, User user) {
+        Category category = new Category();
+        category.setIsGeneral(false);
+        category.setCreator(user);
+        category.setIsDeleted(false);
+        category.setTopic(categoryName);
+        return repository.save(category);
     }
 }

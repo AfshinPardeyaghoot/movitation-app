@@ -61,11 +61,18 @@ public class StyleController {
     }
 
     @GetMapping("/categories")
-    public String categoryPage(Model model) {
-        System.out.println("in categories");
-        List<Category> categories = categoryService.findAll();
+    public String categoryPage(Model model, Principal principal) {
+        User user = userService.findByUser(principal.getName());
+        List<Category> categories = categoryService.getGeneralAndUserCategories(user);
         model.addAttribute("categories", categories);
         return "categories";
+    }
+
+    @PostMapping("/category")
+    public String creatCategory(String categoryName, Principal principal) {
+        User user = userService.findByUser(principal.getName());
+        Category category = categoryService.create(categoryName, user);
+        return "redirect:/categories";
     }
 
     @ModelAttribute("pageStyle")

@@ -72,7 +72,7 @@
             font-size: large;
         }
 
-        .input-name{
+        .input-name {
             width: 50%;
         }
 
@@ -120,7 +120,7 @@
             border: 6px double #5b5b5b !important;
         }
 
-        .new-category:hover{
+        .new-category:hover {
             background-color: #dd4545;
         }
 
@@ -153,8 +153,8 @@
         <div class="new-category-container">
             <button onclick="showForm()" class="new-category">New</button>
         </div>
-        <form class="category-form" id="cat-form">
-            <input class="input-name" type="text" placeholder="Category Name">
+        <form method="post" class="category-form" id="cat-form" th:action="@{/category}">
+            <input class="input-name" type="text" placeholder="Category Name" name="categoryName">
             <input type="submit" class="cat-form-submit" id="create-submit" value="Add">
         </form>
     </div>
