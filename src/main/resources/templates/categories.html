@@ -9,7 +9,7 @@
             height: 100%;
             background-repeat: no-repeat;
             background-size: 100% 100%;
-            background-color: #222;
+            background-color: #5f968e;
         }
 
         .header {
@@ -26,61 +26,18 @@
         .style-container {
             padding: 10px;
             margin: 30px;
+            /*border: 6px double #d5c9b1 !important;*/
             border: 6px double #5b5b5b !important;
             text-align: center;
             font-size: x-large;
             /*background-color: #242f4a;*/
-            background-color: darkslategrey;
+            background-color: #e05858;
             background-size: 100% 100%;
-            color: #b8b2b2;
+            color: #d5c9b1;
             height: 100px;
             width: 200px;
             border-radius: 5px;
             box-shadow: 5px 20px 50px #343434;
-        }
-
-        .create-category {
-            display: flex;
-            flex-direction: column;
-            padding: 10px;
-            margin: 30px;
-            text-align: center;
-            font-size: large;
-            background-size: 100% 100%;
-            color: #b8b2b2;
-            height: 200px;
-            width: 300px;
-            border-radius: 5px;
-        }
-
-
-        .form-hidden-btn {
-            border-radius: 5px;
-            padding: 5px;
-            text-align: center;
-            cursor: pointer;
-            height: 90px;
-            width: 90px;
-            font-size: large;
-            color: #b8b2b2;
-            background: url("http://localhost:8082/image/plus.png") no-repeat;
-            background-size: 100% 100%;
-            border: 6px double #5b5b5b !important;
-        }
-
-        .txt {
-            position: relative;
-            top: 10px;
-            background-color: darkslategrey;
-            height: 90px;
-            width: 90px;
-        }
-
-
-        .form-btn-text {
-            height: 100%;
-            width: 100%;
-            /*background-color: darkslategrey;*/
         }
 
         .style-text {
@@ -103,41 +60,77 @@
             width: 100%;
         }
 
-        .input-name, .cat-form-submit{
+        .input-name, .cat-form-submit {
             margin: 5px;
             padding: 5px;
-            background-color: darkslategrey;
+            /*background-color: darkslategrey;*/
+            background-color: #d5c9b1;
             border: none;
             border-radius: 10px;
             height: 40px;
-            color: #b8b2b2;
+            color: #033e18;
             font-size: large;
         }
 
-        .cat-form-submit{
+        .input-name{
+            width: 50%;
+        }
+
+        .cat-form-submit {
             cursor: pointer !important;
+            width: 20%;
         }
 
 
-        .category-form{
+        .create-category {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            margin: 30px;
+            text-align: center;
+            font-size: large;
+            background-size: 100% 100%;
+            color: #bfdccf;
+            height: 150px;
+            width: 300px;
+            border-radius: 5px;
+        }
+
+        .category-form {
             margin: 5px;
             padding: 5px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            height: 70%;
+            width: 100%;
+            flex-direction: row;
+            flex-wrap: wrap;
         }
 
-        .create-category{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .new-category {
+            border-radius: 5px;
+            padding: 5px;
+            text-align: center;
+            cursor: pointer;
+            font-size: large;
+            color: #d5c9b1;
+            background-color: #e05858;
+            /*background: url("http://localhost:8082/image/plus.png") no-repeat;*/
+            background-size: 100% 100%;
+            border: 6px double #5b5b5b !important;
         }
 
-        #create-submit:hover{
-            background-color: #0c8f61;
-            color: white;
+        .new-category:hover{
+            background-color: #dd4545;
+        }
+
+        .new-category-container {
+            height: 30%;
+            width: 100%;
+        }
+
+        #create-submit:hover {
+            color: #3c3a3a;
         }
 
 
@@ -157,10 +150,8 @@
         </button>
     </form>
     <div class="create-category">
-        <div class="txt">
-            <button onclick="showForm()" class="form-hidden-btn">
-                <div class="form-btn-text"></div>
-            </button>
+        <div class="new-category-container">
+            <button onclick="showForm()" class="new-category">New</button>
         </div>
         <form class="category-form" id="cat-form">
             <input class="input-name" type="text" placeholder="Category Name">
