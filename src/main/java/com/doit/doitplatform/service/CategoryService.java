@@ -38,6 +38,7 @@ public class CategoryService extends BaseServiceImpl<Category, Long, CategoryRep
             result.setTopic("Like");
             result.setCreator(user);
             result.setIsDeleted(false);
+            result.setIsGeneral(false);
             save(result);
         }
 

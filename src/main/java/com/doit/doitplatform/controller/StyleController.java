@@ -1,6 +1,5 @@
 package com.doit.doitplatform.controller;
 
-import com.doit.doitplatform.dto.LikePostDTO;
 import com.doit.doitplatform.model.*;
 import com.doit.doitplatform.service.*;
 import lombok.SneakyThrows;
@@ -149,8 +148,14 @@ public class StyleController {
         User user = userService.findByUser(principal.getName());
         Quotation quotation = quotationService.getById(quotationId);
         Category category = categoryService.getUserLikeCategory(user);
-        QuotationCategory quotationCategory = quotationCategoryService.create(quotation, category);
-        UserQuotationLike userQuotationLike = userQuotationLikeService.likeQuotation(quotation, user);
+        if (userQuotationLikeService.isUserLikedQuotation(user, quotation)) {
+            quotationCategoryService.softDelete(quotationCategoryService.findByQuotationAndCategory(quotation, category));
+            userQuotationLikeService.disLikeQuotation(quotation, user);
+
+        } else {
+            quotationCategoryService.create(quotation, category);
+            userQuotationLikeService.likeQuotation(quotation, user);
+        }
         return ResponseEntity.ok(true);
     }
 

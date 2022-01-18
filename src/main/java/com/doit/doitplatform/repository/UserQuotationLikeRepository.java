@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface UserQuotationLikeRepository extends AbstractRepository<com.doit.doitplatform.model.UserQuotationLike, Long> {
     Optional<UserQuotationLike> findByUserAndQuotation(User user, Quotation quotation);
+
+    Optional<UserQuotationLike> findByUserAndQuotationAndIsDeleted(User user, Quotation quotation, Boolean isDeleted);
 }
