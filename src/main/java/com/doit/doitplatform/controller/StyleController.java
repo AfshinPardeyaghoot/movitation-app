@@ -1,5 +1,6 @@
 package com.doit.doitplatform.controller;
 
+import com.doit.doitplatform.dto.LikePostDTO;
 import com.doit.doitplatform.model.*;
 import com.doit.doitplatform.service.*;
 import lombok.SneakyThrows;
@@ -7,6 +8,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,15 +29,21 @@ public class StyleController {
     private final UserCategoryService userCategoryService;
     private final PageStyleService pageStyleService;
     private final UserService userService;
+    private final QuotationService quotationService;
+    private final QuotationCategoryService quotationCategoryService;
+    private final UserQuotationLikeService userQuotationLikeService;
     private final String BASE_URL;
 
     @Autowired
-    public StyleController(@Value("${application.base.url}") String BASE_URL, CategoryService categoryService, UserPageStyleService userPageStyleService, UserService userService, PageStyleService pageStyleService, UserCategoryService userCategoryService) {
+    public StyleController(@Value("${application.base.url}") String BASE_URL, CategoryService categoryService, UserPageStyleService userPageStyleService, UserService userService, PageStyleService pageStyleService, UserCategoryService userCategoryService, QuotationService quotationService, QuotationCategoryService quotationCategoryService, UserQuotationLikeService userQuotationLikeService) {
         this.categoryService = categoryService;
         this.BASE_URL = BASE_URL;
         this.userPageStyleService = userPageStyleService;
         this.pageStyleService = pageStyleService;
         this.userService = userService;
+        this.quotationCategoryService = quotationCategoryService;
+        this.quotationService = quotationService;
+        this.userQuotationLikeService = userQuotationLikeService;
         this.userCategoryService = userCategoryService;
     }
 
@@ -75,7 +83,7 @@ public class StyleController {
     }
 
     @ModelAttribute("quotations")
-    public List<QuotationCategory> quotation(Principal principal) {
+    public List<Quotation> quotation(Principal principal) {
 //        User user = userService.findByUser(principal.getName());
 //        Category category = null;
 //        if (userCategoryService.findByUser(user).isPresent()) {
@@ -85,7 +93,7 @@ public class StyleController {
 //        }
         Category category = null;
         category = categoryService.findByTopic("General");
-        return category.getQuotations();
+        return quotationService.findAllByCategory(category);
     }
 
     @SneakyThrows
@@ -132,6 +140,18 @@ public class StyleController {
 
         userCategoryService.save(userCategory);
         return "redirect:/index";
+    }
+
+    @ResponseBody
+    @PostMapping("/like")
+    public ResponseEntity<?> likeQuotation(@RequestBody String quoteId, Principal principal) {
+        Long quotationId = Long.valueOf(quoteId);
+        User user = userService.findByUser(principal.getName());
+        Quotation quotation = quotationService.getById(quotationId);
+        Category category = categoryService.getUserLikeCategory(user);
+        QuotationCategory quotationCategory = quotationCategoryService.create(quotation, category);
+        UserQuotationLike userQuotationLike = userQuotationLikeService.likeQuotation(quotation, user);
+        return ResponseEntity.ok(true);
     }
 
 }

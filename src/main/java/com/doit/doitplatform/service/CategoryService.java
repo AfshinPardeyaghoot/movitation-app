@@ -3,6 +3,7 @@ package com.doit.doitplatform.service;
 import com.doit.doitplatform.base.service.BaseServiceImpl;
 import com.doit.doitplatform.exception.NotFoundException;
 import com.doit.doitplatform.model.Category;
+import com.doit.doitplatform.model.User;
 import com.doit.doitplatform.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,20 @@ public class CategoryService extends BaseServiceImpl<Category, Long, CategoryRep
     public Category findByTopic(String topic) {
         return repository.findByTopic(topic)
                 .orElseThrow(() -> new NotFoundException("Topic not found"));
+    }
+
+    public Category getUserLikeCategory(User user) {
+        Category result = null;
+        if (repository.findByTopicAndCreator("Like", user).isPresent())
+            result = repository.findByTopicAndCreator("Like", user).get();
+        else {
+            result = new Category();
+            result.setTopic("Like");
+            result.setCreator(user);
+            result.setIsDeleted(false);
+            save(result);
+        }
+
+        return result;
     }
 }

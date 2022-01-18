@@ -4,6 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta th:name="${_csrf.parameterName}" th:content="${_csrf.token}"/>
 <style>
 
     @font-face {
@@ -106,6 +107,7 @@
         opacity: 1;
     }
 
+
     .like-btn {
         background: url("http://localhost:8083/image/like.png") no-repeat;
         background-size: 100% 100%;
@@ -125,6 +127,19 @@
         background-color: red;
     }
 
+    .category-id {
+        position: absolute;
+        top: 700px;
+        color: #0c8f61;
+        opacity: 0;
+    }
+
+    .current-category {
+        position: absolute;
+        top: 700px;
+        color: #0c8f61;
+    }
+
 </style>
 <body th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + '); color:'+${pageStyle.getFontColor()}+';'">
 <div class="header-container">
@@ -134,9 +149,10 @@
     </ul>
 </div>
 <div class="slider-container" th:each="quote : ${quotations}">
-    <div class="mySlides" th:text="${quote.getQuotation().getQuote()}"
+    <div class="mySlides" th:text="${quote.getQuote()}"
          th:style="'font-family:'+${pageStyle.getFontFile()}+';'"></div>
-    <div class="operation-container">
+    <div class="category-id" th:text="${quote.getId()}"></div>
+    <div class="operation-container" onclick="sendLikeRequest()">
         <button class="like-btn">
 
         </button>
@@ -148,10 +164,11 @@
         &#10095;
     </button>
 </div>
-
+<div class="current-category"></div>
 <script>
     var slideIndex = 1;
     showDivs(slideIndex);
+    var qouteCount;
 
     function plusDivs(n) {
         showDivs((slideIndex += n));
@@ -161,6 +178,9 @@
         var i;
         var x = document.getElementsByClassName("mySlides");
         var y = document.getElementsByClassName("operation-container");
+        var z = document.getElementsByClassName("category-id");
+
+
         if (n > x.length) {
             slideIndex = 1;
         }
@@ -169,10 +189,37 @@
         }
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
-            y[i].style.display = "none"
+            y[i].style.display = "none";
+            z[i].style.display = "none";
         }
         x[slideIndex - 1].style.display = "block";
         y[slideIndex - 1].style.display = "block";
+        z[slideIndex - 1].style.display = "block";
+        qouteCount = z[slideIndex - 1].innerHTML
+
+
+    }
+
+    function sendLikeRequest() {
+
+        console.log(qouteCount);
+
+        var data = {};
+        data["quoteId"] = qouteCount;
+
+        var token = $("meta[name='_csrf']").attr("content");
+
+        $.ajax({
+            type: "post",
+            data: qouteCount,
+            contentType: "application/json",
+            url: "/like",
+            dataType: "json",
+            headers: {"X-CSRF-TOKEN": token},
+            success: function (result) {
+                console.log(result);
+            }
+        });
     }
 </script>
 </body>
