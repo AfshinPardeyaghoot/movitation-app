@@ -120,20 +120,24 @@
         padding: 0;
     }
 
-    .like-btn:hover {
-        background-color: #3a0505;
-    }
-
     .category-id {
         position: absolute;
         top: 700px;
-        opacity: 0;
     }
 
     .current-category {
         position: absolute;
         top: 700px;
     }
+
+    .duration-300 {
+        fill: #e05858;
+    }
+
+    .duration-300:hover {
+        fill: #dd3b3b;
+    }
+
 
 </style>
 <body th:style="'background-image:url(' + ${pageStyle.getBackgroundImage()} + '); color:'+${pageStyle.getFontColor()}+';'">
@@ -148,10 +152,14 @@
          th:style="'font-family:'+${pageStyle.getFontFile()}+';'"></div>
     <div class="category-id" th:text="${quote.getId()}"></div>
     <div class="is-quote-liked" th:text="${quote.getIsLiked()}" style="display: none"></div>
-    <div class="operation-container" onclick="sendLikeRequest()">
-        <button class="like-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" stroke-width="2.5" stroke="#CACBD2" fill="none" class="duration-300 transform transition-all" style="width: 48px; height: 48px;"><path d="M9.06 25c-1.38-7.7 3.72-14.37 11.67-15 7-.55 10.47 7.93 11.17 9.55a.13.13 0 00.25 0c3.25-8.91 9.17-9.29 11.25-9.5 5.6-.6 13.11 3.73 11.6 13.82-2.16 14-23.12 29.81-23.12 29.81S11.79 40.05 9.06 25z"></path></svg>
-        </button>
+    <div class="operation-container">
+
+        <svg xmlns="http://www.w3.org/2000/svg" onclick="sendLikeRequest()" viewBox="0 0 64 64" stroke-width="2.5"
+             stroke="#CACBD2" fill="none"
+             class="like-btn duration-300 transform transition-all" style="width: 48px; height: 48px;">
+            <path d="M9.06 25c-1.38-7.7 3.72-14.37 11.67-15 7-.55 10.47 7.93 11.17 9.55a.13.13 0 00.25 0c3.25-8.91 9.17-9.29 11.25-9.5 5.6-.6 13.11 3.73 11.6 13.82-2.16 14-23.12 29.81-23.12 29.81S11.79 40.05 9.06 25z"></path>
+            <!--            <button class="like-btn" ></button>-->
+        </svg>
     </div>
     <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">
         &#10094;
@@ -216,14 +224,14 @@
             dataType: "json",
             headers: {"X-CSRF-TOKEN": token},
             success: function (result) {
-                var n = document.getElementsByClassName("like-btn");
+                var n = document.getElementsByClassName("duration-300");
                 var m = document.getElementsByClassName("is-quote-liked");
                 var isLiked = m[slideIndex - 1].innerHTML;
                 if (isLiked === 'true') {
-                    n[slideIndex - 1].style.color = "#FA9E9ED8";
+                    n[slideIndex - 1].style.fill = "#FA9E9ED8";
                     m[slideIndex - 1].innerHTML = 'false';
                 } else {
-                    n[slideIndex - 1].style.color = "red";
+                    n[slideIndex - 1].style.fill = "red";
                     m[slideIndex - 1].innerHTML = 'true';
                 }
 
@@ -232,12 +240,12 @@
     }
 
     function setLikeBtnColor() {
-        var x = document.getElementsByClassName("like-btn")
+        var x = document.getElementsByClassName("duration-300")
         var y = document.getElementsByClassName("is-quote-liked");
         for (i = 0; i < x.length; i++) {
             var isLiked = y[i].innerHTML;
             if (isLiked === 'true') {
-                x[i].style.backgroundColor = "red";
+                x[i].style.fill = "red";
             }
         }
     }

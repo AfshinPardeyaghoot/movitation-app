@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface QuotationRepository extends AbstractRepository<Quotation, Long> {
 
-    @Query("select q from Quotation q inner join QuotationCategory qc on q = qc.quotation where qc.category =:category")
+    @Query("select q from Quotation q inner join QuotationCategory qc on q = qc.quotation where qc.category =:category and qc.isDeleted = false ")
     List<Quotation> findAllByCategory(Category category);
 }

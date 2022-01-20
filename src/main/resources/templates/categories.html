@@ -40,20 +40,6 @@
             box-shadow: 5px 20px 50px #343434;
         }
 
-        .style-text {
-            position: relative;
-            top: 25%;
-            text-shadow: 2px 2px 4px #626262;
-            font-family: custom;
-            /*text-shadow: 0 0 3px #fffbfb, 0 0 5px #111111;*/
-        }
-
-        .submit-btn {
-            height: 100%;
-            width: 100%;
-            cursor: pointer;
-            opacity: 0;
-        }
 
         form {
             height: 100%;
@@ -86,8 +72,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 10px;
-            margin: 30px;
+            padding: 10px 0;
+            margin: 30px 0;
             text-align: center;
             font-size: large;
             background-size: 100% 100%;
@@ -133,6 +119,49 @@
             color: #3c3a3a;
         }
 
+        .edit-btn {
+            height: 30%;
+            width: 30%;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            top: 20%;
+            bottom: 3px;
+            color: #d5c9b1;
+            /*background-color: #e05858;*/
+            background-color: #0f0c29;
+            border: 6px double #5b5b5b !important;
+        }
+
+        .edit-btn:hover {
+            background-color: #dd4545;
+        }
+
+        .style-text {
+            position: relative;
+            color: #d5c9b1;
+            background-color: #e05858;
+            height: 100%;
+            width: 100%;
+            font-size: large;
+            border: none;
+            cursor: pointer;
+            /*top: 25%;*/
+            text-align-all: center;
+            text-shadow: 2px 2px 4px #626262;
+            font-family: custom;
+            /*text-shadow: 0 0 3px #fffbfb, 0 0 5px #111111;*/
+        }
+
+        .submit-btn {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            background-color: #1e1d1d;
+            opacity: 1;
+        }
+
 
     </style>
 </head>
@@ -144,10 +173,15 @@
     <form class="style-container" th:each="category : ${categories}"
           th:action="@{/user/category}"
           method="post">
-        <div class="style-text" th:text="${category.getTopic()}"></div>
+        <button type="submit" class="style-text" th:text="${category.getTopic()}"></button>
+        <!--        <div class="style-text" th:text="${category.getTopic()}"></div>-->
         <input type="hidden" th:value="${category.getId()}" name="categoryId">
-        <button type="submit" class="submit-btn">
-        </button>
+        <div class="category-is-general" th:text="${category.getIsGeneral()}" style="display: none"></div>
+<!--        <button class="edit-btn" >Edit</button>-->
+        <form class="edit-btn" th:action="@{/category/edit}" method="post">
+            <input type="hidden" th:value="${category.getId()}" name="categoryId">
+            <button class="edit-btn" type="submit">Edit</button>
+        </form>
     </form>
     <div class="create-category">
         <div class="new-category-container">
@@ -163,6 +197,7 @@
 <script>
     var x = document.getElementById("cat-form");
     x.style.display = 'none';
+    addEditBtn();
 
     function showForm() {
         var form = document.getElementById("cat-form");
@@ -170,6 +205,18 @@
             form.style.display = 'block';
         } else {
             form.style.display = 'none';
+        }
+    }
+
+    function addEditBtn() {
+        var editBtns = document.getElementsByClassName("edit-btn")
+        var catgories = document.getElementsByClassName("category-is-general");
+
+        for (i = 0; i < catgories.length; i++) {
+            var isGeneral = catgories[i].innerHTML;
+            if (isGeneral === 'true') {
+                editBtns[i].style.display = "none";
+            }
         }
     }
 </script>

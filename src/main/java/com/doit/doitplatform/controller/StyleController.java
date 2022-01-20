@@ -75,6 +75,13 @@ public class StyleController {
         return "redirect:/categories";
     }
 
+    @PostMapping("/category/edit")
+    public String editCategory(Long categoryId) {
+        System.out.println("here in eding category");
+        Category category = categoryService.getById(categoryId);
+        return "edit-category";
+    }
+
     @ModelAttribute("pageStyle")
     public PageStyle style(Principal principal) {
         User user = userService.findByUser(principal.getName());
@@ -103,6 +110,7 @@ public class StyleController {
                 .stream()
                 .map(quotation -> quotation.quotationGetDTO(userQuotationLikeService.quotationIdsUserLiked(user)))
                 .collect(Collectors.toList());
+
         return result;
     }
 
@@ -155,6 +163,7 @@ public class StyleController {
     @ResponseBody
     @PostMapping("/like")
     public ResponseEntity<?> likeQuotation(@RequestBody String quoteId, Principal principal) {
+
         Long quotationId = Long.valueOf(quoteId);
         User user = userService.findByUser(principal.getName());
         Quotation quotation = quotationService.getById(quotationId);

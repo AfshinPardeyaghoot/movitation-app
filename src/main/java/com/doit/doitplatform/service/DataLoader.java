@@ -110,26 +110,31 @@ public class DataLoader implements CommandLineRunner {
             QuotationCategory quotationCategory1 = new QuotationCategory();
             quotationCategory1.setCategory(general);
             quotationCategory1.setQuotation(q1);
+            quotationCategory1.setIsDeleted(false);
             quotationCategoryService.save(quotationCategory1);
 
             QuotationCategory quotationCategory2 = new QuotationCategory();
             quotationCategory2.setCategory(general);
             quotationCategory2.setQuotation(q2);
+            quotationCategory2.setIsDeleted(false);
             quotationCategoryService.save(quotationCategory2);
 
             QuotationCategory quotationCategory3 = new QuotationCategory();
             quotationCategory3.setCategory(general);
             quotationCategory3.setQuotation(q3);
+            quotationCategory3.setIsDeleted(false);
             quotationCategoryService.save(quotationCategory3);
 
             QuotationCategory quotationCategory4 = new QuotationCategory();
             quotationCategory4.setCategory(general);
             quotationCategory4.setQuotation(q4);
+            quotationCategory4.setIsDeleted(false);
             quotationCategoryService.save(quotationCategory4);
 
             QuotationCategory quotationCategory5 = new QuotationCategory();
             quotationCategory5.setCategory(general);
             quotationCategory5.setQuotation(q5);
+            quotationCategory5.setIsDeleted(false);
             quotationCategoryService.save(quotationCategory5);
 
             System.out.println("in data loader");
@@ -137,32 +142,38 @@ public class DataLoader implements CommandLineRunner {
             QuotationCategory quotationCategory6 = new QuotationCategory();
             quotationCategory6.setCategory(general);
             quotationCategory6.setQuotation(q6);
+            quotationCategory6.setIsDeleted(false);
             quotationCategoryService.save(quotationCategory6);
 
 
             QuotationCategory quotationCategory7 = new QuotationCategory();
             quotationCategory7.setCategory(hardTimes);
             quotationCategory7.setQuotation(q6);
+            quotationCategory7.setIsDeleted(false);
             quotationCategoryService.save(quotationCategory7);
 
             QuotationCategory quotationCategory8 = new QuotationCategory();
             quotationCategory8.setCategory(hardTimes);
             quotationCategory8.setQuotation(q7);
+            quotationCategory8.setIsDeleted(false);
             quotationCategoryService.save(quotationCategory8);
 
             QuotationCategory quotationCategory9 = new QuotationCategory();
             quotationCategory9.setCategory(hardTimes);
             quotationCategory9.setQuotation(q8);
+            quotationCategory9.setIsDeleted(false);
             quotationCategoryService.save(quotationCategory9);
 
             QuotationCategory quotationCategory10 = new QuotationCategory();
             quotationCategory10.setCategory(hardTimes);
             quotationCategory10.setQuotation(q9);
+            quotationCategory10.setIsDeleted(false);
             quotationCategoryService.save(quotationCategory10);
 
             QuotationCategory quotationCategory11 = new QuotationCategory();
             quotationCategory11.setCategory(hardTimes);
             quotationCategory11.setQuotation(q10);
+            quotationCategory11.setIsDeleted(false);
             quotationCategoryService.save(quotationCategory11);
 
 
