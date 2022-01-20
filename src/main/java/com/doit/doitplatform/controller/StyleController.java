@@ -51,6 +51,7 @@ public class StyleController {
     @GetMapping("/styles")
     public String styleController(Model model) {
         List<PageStyle> pageStyleList = pageStyleService.findAllNotDeleted();
+        System.out.println("page style list : "+pageStyleList.size());
         model.addAttribute("pageStyleList", pageStyleList);
         return "styles";
     }
@@ -89,7 +90,7 @@ public class StyleController {
             return userPageStyleService.findByUser(user).get().getPageStyle();
         }
         PageStyle style = new PageStyle();
-        style.setBackgroundImage(BASE_URL + "/image/image5.jpg");
+        style.setBackgroundImage(BASE_URL + "/image/image5.png");
         style.setFontColor("#EC9F3B");
         style.setFontFile("font3");
         return style;
@@ -117,7 +118,8 @@ public class StyleController {
     @SneakyThrows
     @GetMapping("/image/{imageName}")
     public void getImageAsByteArray(HttpServletResponse response, @PathVariable String imageName) throws IOException {
-        File file = new File(String.format("/home/afshinpy/iam/%s", imageName));
+        String current_dir = System.getProperty("user.dir");
+        File file = new File(String.format("C:\\home\\afshinpy\\iam\\iam\\%s", imageName));
         InputStream in = new FileInputStream(file);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(in, response.getOutputStream());
