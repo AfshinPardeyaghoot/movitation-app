@@ -37,9 +37,12 @@ public class UserQuotationLikeService extends BaseServiceImpl<UserQuotationLike,
     }
 
     public UserQuotationLike disLikeQuotation(Quotation quotation, User user) {
-        UserQuotationLike userQuotationLike = repository.findByUserAndQuotationAndIsDeleted(user, quotation, false).get();
-        userQuotationLike.setIsDeleted(true);
-        return repository.save(userQuotationLike);
+        if (repository.findByUserAndQuotationAndIsDeleted(user, quotation, false).isPresent()) {
+            UserQuotationLike userQuotationLike = repository.findByUserAndQuotationAndIsDeleted(user, quotation, false).get();
+            userQuotationLike.setIsDeleted(true);
+            return repository.save(userQuotationLike);
+        }
+        return null;
     }
 
     public List<Long> quotationIdsUserLiked(User user) {

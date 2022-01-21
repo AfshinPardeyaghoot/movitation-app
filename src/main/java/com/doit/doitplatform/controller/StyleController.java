@@ -1,8 +1,10 @@
 package com.doit.doitplatform.controller;
 
 import com.doit.doitplatform.dto.QuotationGetDTO;
-import com.doit.doitplatform.exception.AccessDeniedException;
-import com.doit.doitplatform.model.*;
+import com.doit.doitplatform.model.Category;
+import com.doit.doitplatform.model.PageStyle;
+import com.doit.doitplatform.model.Quotation;
+import com.doit.doitplatform.model.User;
 import com.doit.doitplatform.service.*;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
@@ -13,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -63,7 +64,6 @@ public class StyleController {
     }
 
 
-
     @ModelAttribute("pageStyle")
     public PageStyle style(Principal principal) {
         User user = userService.findByUser(principal.getName());
@@ -101,7 +101,6 @@ public class StyleController {
     @SneakyThrows
     @GetMapping("/image/{imageName}")
     public void getImageAsByteArray(HttpServletResponse response, @PathVariable String imageName) throws IOException {
-        String current_dir = System.getProperty("user.dir");
         File file = new File(String.format("C:\\home\\afshinpy\\iam\\iam\\%s", imageName));
         InputStream in = new FileInputStream(file);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);

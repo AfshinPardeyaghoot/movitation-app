@@ -17,7 +17,7 @@
     <div class="mySlides" th:text="${quote.getQuote()}"
          th:style="'font-family:'+${pageStyle.getFontFile()}+';'"></div>
     <div class="category-id" th:text="${quote.getId()}" style="display: none"></div>
-    <div class="is-quote-liked" th:text="${quote.getIsLiked()}" style="display: none"></div>
+    <div class="is-quote-liked" th:text="${quote.getIsLiked()}" style="display: none; opacity: 0"></div>
     <div class="operation-container">
 
         <svg xmlns="http://www.w3.org/2000/svg" onclick="sendLikeRequest()" viewBox="0 0 64 64" stroke-width="2.5"
@@ -63,11 +63,9 @@
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
             y[i].style.display = "none";
-            z[i].style.display = "none";
         }
         x[slideIndex - 1].style.display = "block";
         y[slideIndex - 1].style.display = "block";
-        z[slideIndex - 1].style.display = "block";
         quoteID = z[slideIndex - 1].innerHTML
 
 
