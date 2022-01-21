@@ -62,58 +62,7 @@ public class StyleController {
         return "index";
     }
 
-    @GetMapping("/categories")
-    public String categoryPage(Model model, Principal principal) {
-        User user = userService.findByUser(principal.getName());
-        List<Category> categories = categoryService.getGeneralAndUserCategories(user);
-        model.addAttribute("categories", categories);
-        return "categories";
-    }
 
-    @PostMapping("/category")
-    public String creatCategory(String categoryName, Principal principal) {
-        User user = userService.findByUser(principal.getName());
-        Category category = categoryService.create(categoryName, user);
-        return "redirect:/categories";
-    }
-
-    @GetMapping("/category/edit")
-    public String editCategory(Long categoryId, Model model) {
-        Category category = categoryService.getById(categoryId);
-        model.addAttribute("category", category);
-        model.addAttribute("quotations", quotationService.findAllByCategory(category));
-        return "edit-category";
-    }
-
-    @PostMapping("/category/addQuote")
-    public String addQuoteToCategory(Long categoryId, String quotation, Principal principal, RedirectAttributes model) {
-        User user = userService.findByUser(principal.getName());
-        model.addAttribute("categoryId", categoryId);
-        if (quotation == null || quotation.length() == 0)
-            return "redirect:/category/edit";
-        Category category = categoryService.getById(categoryId);
-        Quotation quote = quotationService.create(quotation);
-        quotationCategoryService.create(quote, category);
-        return "redirect:/category/edit";
-    }
-
-
-    @GetMapping("/category/deleteQoute")
-    public String deleteQuoteFormCategory(Integer quoteId, Long categoryId, Principal principal, RedirectAttributes model) {
-        Category category = categoryService.getById(categoryId);
-        model.addAttribute("categoryId", categoryId);
-        User user = userService.findByUser(principal.getName());
-        if (quoteId == 0) {
-            return "redirect:/category/edit";
-        }
-        Quotation quotation = quotationService.getById(Long.valueOf(quoteId));
-        if (category.getCreator() != user) {
-            throw new AccessDeniedException("دسترسی غیر مجاز");
-        }
-        QuotationCategory quotationCategory = quotationCategoryService.findByQuotationAndCategory(quotation, category);
-        quotationCategoryService.softDelete(quotationCategory);
-        return "redirect:/category/edit";
-    }
 
     @ModelAttribute("pageStyle")
     public PageStyle style(Principal principal) {
@@ -157,43 +106,6 @@ public class StyleController {
         InputStream in = new FileInputStream(file);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(in, response.getOutputStream());
-    }
-
-    @PostMapping("/user/style")
-    public String setUserStyle(Long styleId, Principal principal) {
-        UserPageStyle userPageStyle = null;
-        User user = userService.findByUser(principal.getName());
-        PageStyle pageStyle = pageStyleService.getById(styleId);
-        if (userPageStyleService.findByUser(user).isPresent()) {
-            userPageStyle = userPageStyleService.findByUser(user).get();
-            userPageStyle.setPageStyle(pageStyle);
-        } else {
-            userPageStyle = new UserPageStyle();
-            userPageStyle.setPageStyle(pageStyle);
-            userPageStyle.setUser(user);
-            userPageStyle.setIsDeleted(false);
-        }
-        userPageStyleService.save(userPageStyle);
-        return "redirect:/index";
-    }
-
-    @PostMapping("/user/category")
-    public String setUserCategory(Long categoryId, Principal principal) {
-        User user = userService.findByUser(principal.getName());
-        Category category = categoryService.getById(categoryId);
-        UserCategory userCategory = null;
-        if (userCategoryService.findByUser(user).isPresent()) {
-            userCategory = userCategoryService.findByUser(user).get();
-            userCategory.setCategory(category);
-        } else {
-            userCategory = new UserCategory();
-            userCategory.setUser(user);
-            userCategory.setCategory(category);
-            userCategory.setIsDeleted(false);
-        }
-
-        userCategoryService.save(userCategory);
-        return "redirect:/index";
     }
 
     @ResponseBody
