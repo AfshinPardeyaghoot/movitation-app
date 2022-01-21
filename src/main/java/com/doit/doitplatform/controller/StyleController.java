@@ -34,11 +34,13 @@ public class StyleController {
     private final QuotationCategoryService quotationCategoryService;
     private final UserQuotationLikeService userQuotationLikeService;
     private final String BASE_URL;
+    private final String STORAGE_BASE_LOCATION;
 
     @Autowired
-    public StyleController(@Value("${application.base.url}") String BASE_URL, CategoryService categoryService, UserPageStyleService userPageStyleService, UserService userService, PageStyleService pageStyleService, UserCategoryService userCategoryService, QuotationService quotationService, QuotationCategoryService quotationCategoryService, UserQuotationLikeService userQuotationLikeService) {
+    public StyleController(@Value("${application.storage.base.location}") String STORAGE_BASE_LOCATION, @Value("${application.base.url}") String BASE_URL, CategoryService categoryService, UserPageStyleService userPageStyleService, UserService userService, PageStyleService pageStyleService, UserCategoryService userCategoryService, QuotationService quotationService, QuotationCategoryService quotationCategoryService, UserQuotationLikeService userQuotationLikeService) {
         this.categoryService = categoryService;
         this.BASE_URL = BASE_URL;
+        this.STORAGE_BASE_LOCATION = STORAGE_BASE_LOCATION;
         this.userPageStyleService = userPageStyleService;
         this.pageStyleService = pageStyleService;
         this.userService = userService;
@@ -102,7 +104,8 @@ public class StyleController {
     @SneakyThrows
     @GetMapping("/image/{imageName}")
     public void getImageAsByteArray(HttpServletResponse response, @PathVariable String imageName) throws IOException {
-        File file = new File(String.format("C:\\home\\afshinpy\\iam\\iam\\%s", imageName));
+        System.out.println("storage location : " + STORAGE_BASE_LOCATION);
+        File file = new File(String.format(STORAGE_BASE_LOCATION, imageName));
         InputStream in = new FileInputStream(file);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(in, response.getOutputStream());
