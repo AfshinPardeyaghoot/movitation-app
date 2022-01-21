@@ -18,4 +18,6 @@ public interface CategoryRepository extends AbstractRepository<Category, Long> {
 
     @Query("select c from Category c where ((c.isGeneral = true ) or ( c.creator =:user)) and c.isDeleted = false ")
     List<Category> getGeneralAndUserCategories(User user);
+
+    List<Category> findAllByIsGeneral(Boolean isGeneral);
 }

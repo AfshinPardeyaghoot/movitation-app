@@ -38,6 +38,10 @@ public class RecourseController {
         return "../static/css/edit-category.css";
     }
 
+    @GetMapping("/css/admin-panel.css")
+    public String adminPanelCss() {
+        return "../static/css/admin-panel.css";
+    }
 
 
 }

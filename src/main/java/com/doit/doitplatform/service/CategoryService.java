@@ -3,6 +3,7 @@ package com.doit.doitplatform.service;
 import com.doit.doitplatform.base.service.BaseServiceImpl;
 import com.doit.doitplatform.exception.NotFoundException;
 import com.doit.doitplatform.model.Category;
+import com.doit.doitplatform.model.Role;
 import com.doit.doitplatform.model.User;
 import com.doit.doitplatform.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +54,17 @@ public class CategoryService extends BaseServiceImpl<Category, Long, CategoryRep
 
     public Category create(String categoryName, User user) {
         Category category = new Category();
-        category.setIsGeneral(false);
+        if (user.getRoles().contains(Role.ROLE_ADMIN))
+            category.setIsGeneral(true);
+        else
+            category.setIsGeneral(false);
         category.setCreator(user);
         category.setIsDeleted(false);
         category.setTopic(categoryName);
         return repository.save(category);
+    }
+
+    public List<Category> getGeneral() {
+        return repository.findAllByIsGeneral(true);
     }
 }

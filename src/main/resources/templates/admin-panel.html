@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manager Panel</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/admin-panel.css">
+</head>
+<body>
+<div class="MainFrame">
+    <div class="FrameTitle">
+        <div class="title-content">
+            پنل راهبر سامانه
+        </div>
+    </div>
+    <div class="FrameContent">
+        <div class="top-container">
+            <div class="user-name">
+                <span th:text="${username}"></span>
+            </div>
+        </div>
+        <div class="container">
+            <button class="action-btn" onclick="window.location.href='/categories'">
+                <a>مدیریت گروه های جملات</a>
+            </button>
+            <button class="action-btn" onclick="alert('Not implemented ....');">
+                <a>مدیریت تصاویر پس زمینه</a>
+            </button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

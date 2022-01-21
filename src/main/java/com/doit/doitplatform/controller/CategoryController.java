@@ -1,10 +1,7 @@
 package com.doit.doitplatform.controller;
 
 import com.doit.doitplatform.exception.AccessDeniedException;
-import com.doit.doitplatform.model.Category;
-import com.doit.doitplatform.model.Quotation;
-import com.doit.doitplatform.model.QuotationCategory;
-import com.doit.doitplatform.model.User;
+import com.doit.doitplatform.model.*;
 import com.doit.doitplatform.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +34,11 @@ public class CategoryController {
     @GetMapping("/categories")
     public String categoryPage(Model model, Principal principal) {
         User user = userService.findByUser(principal.getName());
-        List<Category> categories = categoryService.getGeneralAndUserCategories(user);
+        List<Category> categories = null;
+        if (user.getRoles().contains(Role.ROLE_ADMIN))
+            categories = categoryService.getGeneral();
+        else
+            categories = categoryService.getGeneralAndUserCategories(user);
         model.addAttribute("categories", categories);
         return "categories";
     }

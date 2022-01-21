@@ -1,10 +1,7 @@
 package com.doit.doitplatform.controller;
 
 import com.doit.doitplatform.dto.QuotationGetDTO;
-import com.doit.doitplatform.model.Category;
-import com.doit.doitplatform.model.PageStyle;
-import com.doit.doitplatform.model.Quotation;
-import com.doit.doitplatform.model.User;
+import com.doit.doitplatform.model.*;
 import com.doit.doitplatform.service.*;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
@@ -59,7 +56,11 @@ public class StyleController {
     }
 
     @RequestMapping("/index")
-    public String indexPage(Model model) {
+    public String indexPage(Model model, Principal principal) {
+        User user = userService.findByUser(principal.getName());
+        if (user.getRoles().contains(Role.ROLE_ADMIN)) {
+            return "redirect:/adminPanel";
+        }
         return "index";
     }
 
