@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="header">
-    <div class="isAdmin" id="is-admin"  th:text="${isAdmin}"></div>
+    <div class="isAdmin" id="is-admin" th:text="${isAdmin}"></div>
 </div>
 <div class="container">
     <div class="style-container" th:each="category : ${categories}">
@@ -17,16 +17,16 @@
         </form>
         <form class="edit-btn-form" th:action="@{/category/edit}" method="get">
             <input type="hidden" th:value="${category.getId()}" name="categoryId">
-            <button class="edit-btn" type="submit">Edit</button>
+            <button class="edit-btn" type="submit">ویرایش</button>
         </form>
     </div>
     <div class="create-category">
         <div class="new-category-container">
-            <button onclick="showForm()" class="new-category">New</button>
+            <button onclick="showForm()" class="new-category">جدید</button>
         </div>
         <form method="post" class="category-form" id="cat-form" th:action="@{/category}">
-            <input class="input-name" type="text" placeholder="Category Name" name="categoryName">
-            <input type="submit" class="cat-form-submit" id="create-submit" value="Add">
+            <input class="input-name" type="text" placeholder="نام گروه" name="categoryName">
+            <input type="submit" class="cat-form-submit" id="create-submit" value="ثبت">
         </form>
     </div>
 </div>

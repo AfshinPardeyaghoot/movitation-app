@@ -12,19 +12,19 @@
     <div class="signup">
         <!--/*@thymesVar id="signUpDTO" type="com.doit.doitplatform.dto.SignUpDTO"*/-->
         <form th:action="@{/sign-up}"  method="post" action="#" th:object="${signUpDTO}">
-            <label for="chk" aria-hidden="true">Sign up</label>
-            <input type="text" th:field="*{username}" name="username" placeholder="User name" required="" >
-            <input type="email" th:field="*{email}" name="email" placeholder="Email" required="">
-            <input type="password" th:field="*{password}" name="password" placeholder="Password" required="">
+            <label for="chk" aria-hidden="true">ثبت نام</label>
+            <input type="text" th:field="*{username}" name="username" placeholder="نام کاربری" required="" >
+            <input type="email" th:field="*{email}" name="email" placeholder="ایمیل" required="">
+            <input type="password" th:field="*{password}" name="password" placeholder="رمز ورود" required="">
             <input type="submit" value="Sign in">
         </form>
     </div>
 
     <div class="login">
         <form method="post" name="f" th:action="@{/doLogin}" >
-            <label for="chk" aria-hidden="true">Login</label>
-            <input type="text" name="username" placeholder="Username" required="" >
-            <input type="password" name="password" placeholder="Password" required="">
+            <label for="chk" aria-hidden="true">ورود</label>
+            <input type="text" name="username" placeholder="نام کاربری" required="" >
+            <input type="password" name="password" placeholder="رمز ورود" required="">
             <input type="submit" value="Login">
         </form>
     </div>
