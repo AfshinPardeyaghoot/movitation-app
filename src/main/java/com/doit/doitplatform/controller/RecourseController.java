@@ -9,22 +9,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RecourseController {
 
     @GetMapping("/css/login.css")
-    public String getLoginStyle(){
+    public String getLoginStyle() {
         return "../static/css/login.css";
     }
 
     @GetMapping("/js/login.js")
-    public String getLoginJs(){
+    public String getLoginJs() {
         return "../static/js/login.js";
     }
 
-    @GetMapping("/js/index.js")
-    public String getIndexJs(){
-        return "../static/js/index.js";
-    }
-
     @GetMapping("/css/index.css")
-    public String getIndexCss(){
+    public String getIndexCss() {
         return "../static/css/index.css";
     }
+
+    @GetMapping("/css/categories.css")
+    public String categoriesCss() {
+        return "../static/css/categories.css";
+    }
+
+    @GetMapping("/css/styles.css")
+    public String stylesCss() {
+        return "../static/css/styles.css";
+    }
+
+    @GetMapping("/css/edit-category.css")
+    public String editCategoryCss() {
+        return "../static/css/edit-category.css";
+    }
+
+
+
 }
