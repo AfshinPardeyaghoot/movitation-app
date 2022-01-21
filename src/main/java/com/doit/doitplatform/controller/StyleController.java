@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -51,7 +52,6 @@ public class StyleController {
     @GetMapping("/styles")
     public String styleController(Model model) {
         List<PageStyle> pageStyleList = pageStyleService.findAllNotDeleted();
-        System.out.println("page style list : "+pageStyleList.size());
         model.addAttribute("pageStyleList", pageStyleList);
         return "styles";
     }
@@ -76,11 +76,31 @@ public class StyleController {
         return "redirect:/categories";
     }
 
-    @PostMapping("/category/edit")
-    public String editCategory(Long categoryId) {
-        System.out.println("here in eding category");
+    @GetMapping("/test")
+    public String testCategoryController(Long categoryId) {
+        System.out.println("CategoryId is : " + categoryId);
+        return "categories";
+    }
+
+    @GetMapping("/category/edit")
+    public String editCategory(Long categoryId, Model model) {
         Category category = categoryService.getById(categoryId);
+        model.addAttribute("category", category);
+        model.addAttribute("quotations", quotationService.findAllByCategory(category));
         return "edit-category";
+    }
+
+
+    @GetMapping("/category/deleteQoute")
+    public String deleteQuoteFormCategory(Integer quoteId, Long categoryId, RedirectAttributes model) {
+        System.out.println("quote id : " + quoteId);
+        System.out.println("category id : " + categoryId);
+        Quotation quotation = quotationService.getById(Long.valueOf(quoteId));
+        Category category = categoryService.getById(categoryId);
+        QuotationCategory quotationCategory = quotationCategoryService.findByQuotationAndCategory(quotation, category);
+        quotationCategoryService.softDelete(quotationCategory);
+        model.addAttribute("categoryId", category);
+        return "redirect:/category/edit";
     }
 
     @ModelAttribute("pageStyle")

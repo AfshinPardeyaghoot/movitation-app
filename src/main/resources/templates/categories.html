@@ -126,11 +126,10 @@
             text-align: center;
             cursor: pointer;
             position: relative;
-            top: 20%;
+            /*top: 10%;*/
             bottom: 3px;
             color: #d5c9b1;
-            /*background-color: #e05858;*/
-            background-color: #0f0c29;
+            background-color: #e05858;
             border: 6px double #5b5b5b !important;
         }
 
@@ -170,19 +169,17 @@
 
 </div>
 <div class="container">
-    <form class="style-container" th:each="category : ${categories}"
-          th:action="@{/user/category}"
-          method="post">
-        <button type="submit" class="style-text" th:text="${category.getTopic()}"></button>
-        <!--        <div class="style-text" th:text="${category.getTopic()}"></div>-->
-        <input type="hidden" th:value="${category.getId()}" name="categoryId">
-        <div class="category-is-general" th:text="${category.getIsGeneral()}" style="display: none"></div>
-<!--        <button class="edit-btn" >Edit</button>-->
-        <form class="edit-btn" th:action="@{/category/edit}" method="post">
+    <div class="style-container" th:each="category : ${categories}">
+        <form class="style-container-form" th:action="@{/user/category}" method="post">
+            <button type="submit" class="style-text" th:text="${category.getTopic()}"></button>
+            <input type="hidden" th:value="${category.getId()}" name="categoryId">
+            <div class="category-is-general" th:text="${category.getIsGeneral()}" style="display: none"></div>
+        </form>
+        <form class="edit-btn-form" th:action="@{/category/edit}" method="get">
             <input type="hidden" th:value="${category.getId()}" name="categoryId">
             <button class="edit-btn" type="submit">Edit</button>
         </form>
-    </form>
+    </div>
     <div class="create-category">
         <div class="new-category-container">
             <button onclick="showForm()" class="new-category">New</button>

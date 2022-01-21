@@ -150,7 +150,7 @@
 <div class="slider-container" th:each="quote : ${quotations}">
     <div class="mySlides" th:text="${quote.getQuote()}"
          th:style="'font-family:'+${pageStyle.getFontFile()}+';'"></div>
-    <div class="category-id" th:text="${quote.getId()}"></div>
+    <div class="category-id" th:text="${quote.getId()}" style="display: none"></div>
     <div class="is-quote-liked" th:text="${quote.getIsLiked()}" style="display: none"></div>
     <div class="operation-container">
 
