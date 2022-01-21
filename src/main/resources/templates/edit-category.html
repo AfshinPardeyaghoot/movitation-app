@@ -257,8 +257,9 @@
         <div class="title-content" th:text="${category.getTopic()}"></div>
     </div>
     <div class="search-container">
-        <form class="new-qoute-form" th:action="@{/category/addQuote}">
-            <input class="input-name" type="text" placeholder="Quote" name="quote">
+        <form class="new-qoute-form" th:action="@{/category/addQuote}" method="post">
+            <input class="input-name" type="text" placeholder="Quote" name="quotation">
+            <input name="categoryId" type="hidden" th:value="${category.getId()}">
             <input class="cat-form-submit" type="submit" value="Add">
         </form>
     </div>

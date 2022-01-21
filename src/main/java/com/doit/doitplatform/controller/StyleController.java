@@ -1,6 +1,7 @@
 package com.doit.doitplatform.controller;
 
 import com.doit.doitplatform.dto.QuotationGetDTO;
+import com.doit.doitplatform.exception.AccessDeniedException;
 import com.doit.doitplatform.model.*;
 import com.doit.doitplatform.service.*;
 import lombok.SneakyThrows;
@@ -76,12 +77,6 @@ public class StyleController {
         return "redirect:/categories";
     }
 
-    @GetMapping("/test")
-    public String testCategoryController(Long categoryId) {
-        System.out.println("CategoryId is : " + categoryId);
-        return "categories";
-    }
-
     @GetMapping("/category/edit")
     public String editCategory(Long categoryId, Model model) {
         Category category = categoryService.getById(categoryId);
@@ -90,16 +85,33 @@ public class StyleController {
         return "edit-category";
     }
 
+    @PostMapping("/category/addQuote")
+    public String addQuoteToCategory(Long categoryId, String quotation, Principal principal, RedirectAttributes model) {
+        User user = userService.findByUser(principal.getName());
+        model.addAttribute("categoryId", categoryId);
+        if (quotation == null || quotation.length() == 0)
+            return "redirect:/category/edit";
+        Category category = categoryService.getById(categoryId);
+        Quotation quote = quotationService.create(quotation);
+        quotationCategoryService.create(quote, category);
+        return "redirect:/category/edit";
+    }
+
 
     @GetMapping("/category/deleteQoute")
-    public String deleteQuoteFormCategory(Integer quoteId, Long categoryId, RedirectAttributes model) {
-        System.out.println("quote id : " + quoteId);
-        System.out.println("category id : " + categoryId);
-        Quotation quotation = quotationService.getById(Long.valueOf(quoteId));
+    public String deleteQuoteFormCategory(Integer quoteId, Long categoryId, Principal principal, RedirectAttributes model) {
         Category category = categoryService.getById(categoryId);
+        model.addAttribute("categoryId", categoryId);
+        User user = userService.findByUser(principal.getName());
+        if (quoteId == 0) {
+            return "redirect:/category/edit";
+        }
+        Quotation quotation = quotationService.getById(Long.valueOf(quoteId));
+        if (category.getCreator() != user) {
+            throw new AccessDeniedException("دسترسی غیر مجاز");
+        }
         QuotationCategory quotationCategory = quotationCategoryService.findByQuotationAndCategory(quotation, category);
         quotationCategoryService.softDelete(quotationCategory);
-        model.addAttribute("categoryId", category);
         return "redirect:/category/edit";
     }
 
@@ -122,6 +134,8 @@ public class StyleController {
         Category category = null;
         if (userCategoryService.findByUser(user).isPresent()) {
             category = userCategoryService.findByUser(user).get().getCategory();
+            if (quotationService.findAllByCategory(category).size() == 0)
+                category = categoryService.findByTopic("General");
         } else {
             category = categoryService.findByTopic("General");
         }

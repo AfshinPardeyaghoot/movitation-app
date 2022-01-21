@@ -29,4 +29,10 @@ public class QuotationService extends BaseServiceImpl<Quotation, Long, Quotation
         return repository.findAllByCategory(category);
     }
 
+    public Quotation create(String quotation) {
+        Quotation quote = new Quotation();
+        quote.setQuote(quotation);
+        quote.setIsDeleted(false);
+        return save(quote);
+    }
 }
