@@ -16,4 +16,6 @@ public interface UserQuotationLikeRepository extends AbstractRepository<com.doit
 
     @Query("select quote.id from UserQuotationLike userLike join Quotation quote on userLike.quotation = quote where userLike.user =:user and userLike.isDeleted = false ")
     List<Long> getQuotationIdsUserLiked(User user);
+
+    void deleteAllByQuotation(Quotation quotation);
 }

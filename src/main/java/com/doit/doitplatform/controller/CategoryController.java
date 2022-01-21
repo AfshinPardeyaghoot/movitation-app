@@ -35,10 +35,13 @@ public class CategoryController {
     public String categoryPage(Model model, Principal principal) {
         User user = userService.findByUser(principal.getName());
         List<Category> categories = null;
-        if (user.getRoles().contains(Role.ROLE_ADMIN))
+        if (user.getRoles().contains(Role.ROLE_ADMIN)) {
             categories = categoryService.getGeneral();
-        else
+            model.addAttribute("isAdmin", true);
+        } else {
             categories = categoryService.getGeneralAndUserCategories(user);
+            model.addAttribute("isAdmin", false);
+        }
         model.addAttribute("categories", categories);
         return "categories";
     }
@@ -79,10 +82,12 @@ public class CategoryController {
         if (quoteId == 0) {
             return "redirect:/category/edit";
         }
-        if (category.getCreator() != user) {
+        if (category.getCreator() != user && (!user.getRoles().contains(Role.ROLE_ADMIN))) {
             throw new AccessDeniedException("دسترسی غیر مجاز");
         }
         Quotation quotation = quotationService.getById(Long.valueOf(quoteId));
+        if (user.getRoles().contains(Role.ROLE_ADMIN))
+            userQuotationLikeService.deleteAllByQuotation(quotation);
         userQuotationLikeService.disLikeQuotation(quotation, user);
         QuotationCategory quotationCategory = quotationCategoryService.findByQuotationAndCategory(quotation, category);
         quotationCategoryService.softDelete(quotationCategory);

@@ -6,6 +6,7 @@ import com.doit.doitplatform.model.User;
 import com.doit.doitplatform.model.UserQuotationLike;
 import com.doit.doitplatform.repository.UserQuotationLikeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -47,5 +48,10 @@ public class UserQuotationLikeService extends BaseServiceImpl<UserQuotationLike,
 
     public List<Long> quotationIdsUserLiked(User user) {
         return repository.getQuotationIdsUserLiked(user);
+    }
+
+    @Transactional
+    public void deleteAllByQuotation(Quotation quotation) {
+        repository.deleteAllByQuotation(quotation);
     }
 }

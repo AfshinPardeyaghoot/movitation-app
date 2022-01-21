@@ -5,7 +5,9 @@
     <link rel="stylesheet" type="text/css" href="../static/css/categories.css">
 </head>
 <body>
-<div class="header"></div>
+<div class="header">
+    <div class="isAdmin" id="is-admin"  th:text="${isAdmin}"></div>
+</div>
 <div class="container">
     <div class="style-container" th:each="category : ${categories}">
         <form class="style-container-form" th:action="@{/user/category}" method="post">
@@ -28,9 +30,8 @@
         </form>
     </div>
 </div>
-
 <script>
-    var x = document.getElementById("cat-form");
+    const x = document.getElementById("cat-form");
     x.style.display = 'none';
     addEditBtn();
 
@@ -44,15 +45,25 @@
     }
 
     function addEditBtn() {
-        var editBtns = document.getElementsByClassName("edit-btn")
-        var catgories = document.getElementsByClassName("category-is-general");
+        const editBtns = document.getElementsByClassName("edit-btn");
+        const catgories = document.getElementsByClassName("category-is-general");
+        const isAdmin = document.getElementById("is-admin");
+        console.log(isAdmin)
+        console.log(isAdmin.innerText)
+        console.log(isAdmin.innerHTML)
 
-        for (i = 0; i < catgories.length; i++) {
-            var isGeneral = catgories[i].innerHTML;
-            if (isGeneral === 'true') {
-                editBtns[i].style.display = "none";
+        if (isAdmin.innerHTML === 'true') {
+            console.log('is it admin');
+        } else {
+            console.log('it is user')
+            for (i = 0; i < catgories.length; i++) {
+                var isGeneral = catgories[i].innerHTML;
+                if (isGeneral === 'true') {
+                    editBtns[i].style.display = "none";
+                }
             }
         }
+
     }
 </script>
 </body>
